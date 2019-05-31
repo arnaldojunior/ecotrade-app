@@ -38,4 +38,9 @@ public class Cidade {
     public void setUf(Uf uf) {
         this.uf = uf;
     }
+
+    public String getLocalizacao() {
+        return nome.concat("/").concat(uf.getUf());
+
+    }
 }

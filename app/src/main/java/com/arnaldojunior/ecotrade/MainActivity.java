@@ -1,11 +1,14 @@
 package com.arnaldojunior.ecotrade;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -17,15 +20,14 @@ import com.google.gson.Gson;
 
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     String categoria;
     ImageButton botao;
-    TextView viewCat;
-    String url = "http://192.169.40.156:8080/EcoTradeServer/anuncio";
+    TextView categoriaTextView;
+    String url = "http://192.168.0.207:8080/EcoTradeServer/anuncio";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,26 +37,25 @@ public class MainActivity extends AppCompatActivity {
         this.requestProdutos();
     }
 
-    public List<Produto> instanciarProdutos() {
-        List<Produto> produtos = new ArrayList<Produto>();
-        Produto p1 = new Produto("Iphone X", "Doação");
-        Produto p2 = new Produto("SmartTv LG", "Venda");
-        Produto p3 = new Produto("Nobreak", "Doação");
-        produtos.add(p1);
-        produtos.add(p2);
-        produtos.add(p3);
-
-        return produtos;
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+        return true;
     }
 
+    /**
+     * Informa a categoria selecionada.
+     * @param view
+     */
     public void buscarListaPorCategoria(View view) {
         categoria = view.getContentDescription().toString();
-        viewCat = (TextView) findViewById(R.id.textView2);
-        viewCat.setText(categoria);
+        categoriaTextView = (TextView) findViewById(R.id.textView2);
+        categoriaTextView.setText(categoria);
     }
 
     public void requestProdutos() {
-        // A request for retrieving  a JSONObject.
+        // A request for retrieving a JSONObject.
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
 

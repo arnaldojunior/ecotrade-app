@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">EcoTrade</string>
     <string name="informatica_icon">informática</string>
+    <string name="inserir_anuncio">Inserir Anúncio</string>
+    <string name="minha_conta">Minha Conta</string>
+    <string name="title_activity_main2">Main2Activity</string>
 </resources>

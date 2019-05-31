@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import com.arnaldojunior.ecotrade.model.Anuncio;
 
+import org.w3c.dom.Text;
+
 import java.util.List;
 
 public class AdapterProduto extends BaseAdapter {
@@ -44,10 +46,14 @@ public class AdapterProduto extends BaseAdapter {
         ImageView imagem = (ImageView) view.findViewById(R.id.listview_personalizada_imagem);
         TextView descricao = (TextView) view.findViewById(R.id.listview_personalizada_descricao);
         TextView finalidade = (TextView) view.findViewById(R.id.listview_personalizada_finalidade);
+        TextView quando = (TextView) view.findViewById(R.id.textview_quando);
+        TextView local = (TextView) view.findViewById(R.id.textview_local);
 
         imagem.setImageResource(R.drawable.smart);
         descricao.setText(anuncio.getProduto().getDescricao());
         finalidade.setText(anuncio.getFinalidade());
+        quando.setText(anuncio.getLogradouro());
+        local.setText(anuncio.getCidade().getLocalizacao());
 
         return view;
     }
