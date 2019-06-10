@@ -50,7 +50,7 @@ public class AdapterProduto extends BaseAdapter {
         TextView local = (TextView) view.findViewById(R.id.textview_local);
 
         imagem.setImageResource(R.drawable.smart);
-        descricao.setText(anuncio.getProduto().getDescricao());
+        descricao.setText(anuncio.getProduto().getNome());
         finalidade.setText(anuncio.getFinalidade());
         quando.setText(anuncio.getLogradouro());
         local.setText(anuncio.getCidade().getLocalizacao());

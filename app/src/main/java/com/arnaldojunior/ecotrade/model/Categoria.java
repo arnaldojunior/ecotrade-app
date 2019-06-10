@@ -3,7 +3,9 @@ package com.arnaldojunior.ecotrade.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Categoria {
+import java.io.Serializable;
+
+public class Categoria implements Serializable {
 
     @SerializedName("id")
     @Expose

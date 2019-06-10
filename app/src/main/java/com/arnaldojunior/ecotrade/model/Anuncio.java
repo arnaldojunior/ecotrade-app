@@ -3,7 +3,10 @@ package com.arnaldojunior.ecotrade.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Anuncio {
+import java.io.Serializable;
+import java.util.Objects;
+
+public class Anuncio implements Serializable {
 
     @SerializedName("bairro")
     @Expose
@@ -116,4 +119,34 @@ public class Anuncio {
         this.valor = valor;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Anuncio anuncio = (Anuncio) o;
+        return finalidade.equals(anuncio.finalidade) &&
+                id.equals(anuncio.id) &&
+                valor.equals(anuncio.valor);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(finalidade, id, valor);
+    }
+
+    @Override
+    public String toString() {
+        return "Anuncio{" +
+                "bairro='" + bairro + '\'' +
+                ", categoria=" + categoria +
+                ", cep='" + cep + '\'' +
+                ", cidade=" + cidade +
+                ", finalidade='" + finalidade + '\'' +
+                ", id='" + id + '\'' +
+                ", logradouro='" + logradouro + '\'' +
+                ", produto=" + produto +
+                ", quando=" + quando +
+                ", valor='" + valor + '\'' +
+                '}';
+    }
 }

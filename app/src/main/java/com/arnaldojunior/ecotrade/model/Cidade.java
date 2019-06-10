@@ -3,7 +3,9 @@ package com.arnaldojunior.ecotrade.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Cidade {
+import java.io.Serializable;
+
+public class Cidade implements Serializable {
 
     @SerializedName("id")
     @Expose

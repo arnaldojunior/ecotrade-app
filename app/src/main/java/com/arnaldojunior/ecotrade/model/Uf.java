@@ -3,7 +3,9 @@ package com.arnaldojunior.ecotrade.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Uf {
+import java.io.Serializable;
+
+public class Uf implements Serializable {
 
     @SerializedName("nome")
     @Expose

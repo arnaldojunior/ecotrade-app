@@ -1,7 +1,13 @@
 <resources>
     <string name="app_name">EcoTrade</string>
     <string name="informatica_icon">informática</string>
+    <string name="eletronicos_icon">eletrônicos</string>
+    <string name="celulares_icon">celulares</string>
+    <string name="categoria_label">Categoria: </string>
     <string name="inserir_anuncio">Inserir Anúncio</string>
     <string name="minha_conta">Minha Conta</string>
     <string name="title_activity_main2">Main2Activity</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
