@@ -2,6 +2,9 @@ package com.arnaldojunior.ecotrade;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
@@ -27,16 +30,25 @@ public class MainActivity extends AppCompatActivity {
     private String categoria;
     private ImageButton botao;
     private TextView categoriaTextView;
-    private String url = "http://192.168.0.207:8080/EcoTradeServer/anuncio";
+    private String url = "http://192.169.40.156:8080/EcoTradeServer/anuncio";
     private ListView anunciosListView;
+    private SearchResponse searchResponse;
     private List<Anuncio> anuncios;
+    private AdapterProduto adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        this.requestProdutos();
+        //this.requestProdutos();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+        return true;
     }
 
     /**
@@ -57,10 +69,10 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         Gson gson = new Gson();
-                        SearchResponse searchResponse = gson.fromJson(response.toString(), SearchResponse.class);
+                        searchResponse = gson.fromJson(response.toString(), SearchResponse.class);
                         anuncios = searchResponse.getAnuncios();
                         anunciosListView = (ListView) findViewById(R.id.listView);
-                        AdapterProduto adapter = new AdapterProduto(anuncios, MainActivity.this);
+                        adapter = new AdapterProduto(anuncios, MainActivity.this);
                         anunciosListView.setAdapter(adapter);
 
                         anunciosListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -82,10 +94,23 @@ public class MainActivity extends AppCompatActivity {
         RequestQueueSingleton.getInstance(this).addToRequestQueue(jsonObjectRequest);
     }
 
+    /**
+     * Inicializa outra activity passando um objeto Anuncio como parâmetro.
+     * @param view
+     * @param position
+     */
     public void abrirAnuncio(View view, int position) {
-        System.out.println("ANÚNCIO: "+ anuncios.get(position).toString());
         Intent intent = new Intent(this, DetailActivity.class);
         intent.putExtra("Anuncio", anuncios.get(position));
         startActivity(intent);
+    }
+
+    public void acessarConta(MenuItem item) {
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+    }
+
+    public void addAnuncio(MenuItem item) {
+
     }
 }

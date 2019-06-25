@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group >
+        <item android:id="@+id/add_anuncio"
+            android:icon="@android:drawable/ic_menu_edit"
+            android:title="@string/add_anuncio"
+            android:onClick="addAnuncio"
+            app:showAsAction="never"/>
+
+        <item android:id="@+id/acessar_conta"
+            android:icon="@android:drawable/star_big_on"
+            android:title="@string/acessar_conta"
+            android:onClick="acessarConta"
+            app:showAsAction="never"/>
+
+        <item android:id="@+id/cadastrar_se"
+            android:title="@string/menu_signup"
+            app:showAsAction="never"/>
+    </group>
+</menu>

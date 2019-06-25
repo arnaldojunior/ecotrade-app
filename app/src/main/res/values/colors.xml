@@ -1,6 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorPrimary">#006000</color>
+    <color name="colorPrimaryDark">#006000</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="lightGray">#E0E0E0</color>
+    <color name="defaultText">#909090</color>
+    <color name="darkText">#303030</color>
+    <color name="white">#fff</color>
+
+    <!-- green shades -->
+    <color name="tea">#D0F0C0</color>
+    <color name="sage">#9DC183</color>
+    <color name="fern">#4F7942</color>
+    <color name="emerald">#50C878</color>
+    <color name="pine">#01796F</color>
+
+    <!-- orange shades -->
+    <color name="salamander">#F05E23</color>
+    <color name="pumpkin">#FF7417</color>
+    <color name="carrot">#EF7215</color>
+    <color name="honey">#EB9605</color>
+    <color name="spice">#793802</color>
+
+    <!-- buttons -->
+    <color name="button_default">@color/salamander</color>
+
+    <!-- inputs -->
+    <color name="input_stroke_default">@color/colorPrimary</color>
+    <color name="input_hint_default">@color/fern</color>
+    <color name="input_text_default">@color/fern</color>
+
 </resources>

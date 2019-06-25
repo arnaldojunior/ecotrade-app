@@ -19,7 +19,25 @@ public class DetailActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         anuncio = (Anuncio) intent.getSerializableExtra("Anuncio");
-        TextView tv = (TextView) findViewById(R.id.produtoTextView);
-        tv.setText(anuncio.getProduto().getNome());
+
+        TextView nomeTV = (TextView) findViewById(R.id.detailNomeTV);
+        nomeTV.setText(anuncio.getProduto().getNome());
+
+        TextView descricaoTV = (TextView) findViewById(R.id.detailDescricaoTV);
+        descricaoTV.setText(anuncio.getProduto().getDescricao().concat(
+                " Equipamento com pouco uso, bem conservado. Apresenta umas pequenas avarias."+
+                " Funciona normalmente."));
+
+        TextView finalidadeTV = (TextView) findViewById(R.id.detailFinalidadeTV);
+        finalidadeTV.setText(anuncio.getFinalidade());
+
+        TextView valorTV = (TextView) findViewById(R.id.detailValorTV);
+        valorTV.setText(anuncio.getValor() != null ? "R$ "+ anuncio.getValor() : "");
+
+        TextView quandoTV = (TextView) findViewById(R.id.detailQuandoTV);
+        quandoTV.setText("Publicado em 20/12/2019 às 18:45");
+
+        TextView anuncianteTV = (TextView) findViewById(R.id.detailAnuncianteTV);
+        anuncianteTV.setText("Arnaldo Junior");
     }
 }
