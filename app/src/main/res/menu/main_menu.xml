@@ -12,11 +12,12 @@
         <item android:id="@+id/acessar_conta"
             android:icon="@android:drawable/star_big_on"
             android:title="@string/acessar_conta"
-            android:onClick="acessarConta"
+            android:onClick="irParaLogin"
             app:showAsAction="never"/>
 
         <item android:id="@+id/cadastrar_se"
             android:title="@string/menu_signup"
+            android:onClick="irParaCadastro"
             app:showAsAction="never"/>
     </group>
 </menu>

@@ -7,31 +7,24 @@ import java.io.Serializable;
 import java.util.Objects;
 
 public class Anuncio implements Serializable {
-
-    @SerializedName("bairro")
+    @SerializedName("id")
     @Expose
-    private String bairro;
+    private Long id;
     @SerializedName("categoria")
     @Expose
     private Categoria categoria;
-    @SerializedName("cep")
-    @Expose
-    private String cep;
     @SerializedName("cidade")
     @Expose
     private Cidade cidade;
     @SerializedName("finalidade")
     @Expose
     private String finalidade;
-    @SerializedName("id")
-    @Expose
-    private String id;
-    @SerializedName("logradouro")
-    @Expose
-    private String logradouro;
     @SerializedName("produto")
     @Expose
     private Produto produto;
+    @SerializedName("endereco")
+    @Expose
+    private Endereco endereco;
     @SerializedName("quando")
     @Expose
     private Object quando;
@@ -39,12 +32,12 @@ public class Anuncio implements Serializable {
     @Expose
     private String valor;
 
-    public String getBairro() {
-        return bairro;
+    public Long getId() {
+        return id;
     }
 
-    public void setBairro(String bairro) {
-        this.bairro = bairro;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Categoria getCategoria() {
@@ -53,14 +46,6 @@ public class Anuncio implements Serializable {
 
     public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
-    }
-
-    public String getCep() {
-        return cep;
-    }
-
-    public void setCep(String cep) {
-        this.cep = cep;
     }
 
     public Cidade getCidade() {
@@ -79,28 +64,20 @@ public class Anuncio implements Serializable {
         this.finalidade = finalidade;
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getLogradouro() {
-        return logradouro;
-    }
-
-    public void setLogradouro(String logradouro) {
-        this.logradouro = logradouro;
-    }
-
     public Produto getProduto() {
         return produto;
     }
 
     public void setProduto(Produto produto) {
         this.produto = produto;
+    }
+
+    public Endereco getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
     }
 
     public Object getQuando() {
@@ -124,26 +101,27 @@ public class Anuncio implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Anuncio anuncio = (Anuncio) o;
-        return finalidade.equals(anuncio.finalidade) &&
-                id.equals(anuncio.id) &&
-                valor.equals(anuncio.valor);
+        return Objects.equals(id, anuncio.id) &&
+                Objects.equals(categoria, anuncio.categoria) &&
+                Objects.equals(cidade, anuncio.cidade) &&
+                Objects.equals(finalidade, anuncio.finalidade) &&
+                Objects.equals(produto, anuncio.produto) &&
+                Objects.equals(quando, anuncio.quando) &&
+                Objects.equals(valor, anuncio.valor);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(finalidade, id, valor);
+        return Objects.hash(id, categoria, cidade, finalidade, produto, quando, valor);
     }
 
     @Override
     public String toString() {
         return "Anuncio{" +
-                "bairro='" + bairro + '\'' +
+                "id='" + id + '\'' +
                 ", categoria=" + categoria +
-                ", cep='" + cep + '\'' +
                 ", cidade=" + cidade +
                 ", finalidade='" + finalidade + '\'' +
-                ", id='" + id + '\'' +
-                ", logradouro='" + logradouro + '\'' +
                 ", produto=" + produto +
                 ", quando=" + quando +
                 ", valor='" + valor + '\'' +

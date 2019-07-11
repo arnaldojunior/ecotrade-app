@@ -9,8 +9,6 @@ import android.widget.TextView;
 
 import com.arnaldojunior.ecotrade.model.Anuncio;
 
-import org.w3c.dom.Text;
-
 import java.util.List;
 
 public class AdapterProduto extends BaseAdapter {
@@ -34,7 +32,7 @@ public class AdapterProduto extends BaseAdapter {
 
     @Override
     public long getItemId(int i) {
-        return 0;
+        return anuncios.get(i).getId();
     }
 
     @Override
@@ -52,7 +50,7 @@ public class AdapterProduto extends BaseAdapter {
         imagem.setImageResource(R.drawable.smart);
         descricao.setText(anuncio.getProduto().getNome());
         finalidade.setText(anuncio.getFinalidade());
-        quando.setText(anuncio.getLogradouro());
+        quando.setText(anuncio.getEndereco().getLogradouro());
         local.setText(anuncio.getCidade().getLocalizacao());
 
         return view;

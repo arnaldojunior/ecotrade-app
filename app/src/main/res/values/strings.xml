@@ -6,12 +6,15 @@
     <string name="categoria_label">Categoria: </string>
     <string name="inserir_anuncio">Inserir Anúncio</string>
     <string name="minha_conta">Minha Conta</string>
-    <string name="title_activity_main2">Main2Activity</string>
+
+    <!-- ACTIVITY TITLES -->
+    <string name="title_activity_login">Entrar</string>
+    <string name="title_activity_detail">Anúncio</string>
+    <string name="title_activity_signup">Cadastro</string>
 
     <!-- MENU -->
     <string name="add_anuncio">Adicionar Anúncio</string>
     <string name="acessar_conta">Acessar Conta</string>
-    <string name="title_activity_login">Entrar</string>
     <string name="menu_signup">Cadastrar-se</string>
 
     <!-- LOGIN -->
@@ -21,4 +24,13 @@
     <string name="login_entrar">Entrar</string>
     <string name="login_sem_conta">Não tem conta?</string>
     <string name="login_cadastrar">Cadastre-se!</string>
+
+    <!-- CADASTRO DE USUÁRIO -->
+    <string name="cadastro_title">Preencha os dados abaixo</string>
+    <string name="cadastro_nome">Nome*</string>
+    <string name="cadastro_cpf">CPF*</string>
+    <string name="cadastro_telefone">Telefone*</string>
+    <string name="cadastro_email">E-mail*</string>
+    <string name="cadastro_senha">Senha*</string>
+    <string name="cadastro_button">Cadastrar</string>
 </resources>

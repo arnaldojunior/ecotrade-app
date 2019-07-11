@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#006000</color>
-    <color name="colorPrimaryDark">#006000</color>
+    <color name="colorPrimary">@color/sea_green</color>
+    <color name="colorPrimaryDark">@color/forest_green</color>
     <color name="colorAccent">#FF4081</color>
     <color name="lightGray">#E0E0E0</color>
     <color name="defaultText">#909090</color>
@@ -14,6 +14,8 @@
     <color name="fern">#4F7942</color>
     <color name="emerald">#50C878</color>
     <color name="pine">#01796F</color>
+    <color name="sea_green">#0f9d58</color>
+    <color name="forest_green">#0b8043</color>
 
     <!-- orange shades -->
     <color name="salamander">#F05E23</color>
@@ -26,7 +28,7 @@
     <color name="button_default">@color/salamander</color>
 
     <!-- inputs -->
-    <color name="input_stroke_default">@color/colorPrimary</color>
+    <color name="input_stroke_default">@color/forest_green</color>
     <color name="input_hint_default">@color/fern</color>
     <color name="input_text_default">@color/fern</color>
 

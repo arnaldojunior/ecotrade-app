@@ -16,26 +16,32 @@ import android.widget.TextView;
 public class LoginActivity extends AppCompatActivity {
 
     private TextView signUpTV;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        signUpTV = findViewById(R.id.loginCadastrarTV);
 
+        toolbar = findViewById(R.id.login_toolbar);
+        setSupportActionBar(toolbar);
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
+
+        signUpTV = findViewById(R.id.loginCadastrarTV);
         signUpTV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goToSignUp();
+                irParaCadastro();
             }
         });
-
     }
 
-    public void goToSignUp() {
-        Intent intent = new Intent(this, SignUpActivity.class);
+    public void irParaCadastro() {
+        Intent intent = new Intent(this, CadastroActivity.class);
         startActivity(intent);
     }
 }
