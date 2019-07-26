@@ -17,21 +17,25 @@ import androidx.databinding.DataBindingUtil;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.arnaldojunior.ecotrade.databinding.ActivityMainBinding;
 import com.arnaldojunior.ecotrade.model.Anuncio;
 import com.arnaldojunior.ecotrade.model.SearchResponse;
 import com.google.gson.Gson;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     private String categoriaSelecionada = "geral";
     private ImageButton botao;
-    private String url = "http://192.169.40.156:8080/EcoTradeServer/anuncio";
+    private String url = "http://192.168.0.15:8080/EcoTradeServer/rest/anuncio";
     private ListView anunciosListView;
     private SearchResponse searchResponse;
     private List<Anuncio> anuncios;
@@ -47,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.main_toolbar);
         setSupportActionBar(toolbar);
 
-        //this.requestProdutos();
+        this.requestProdutos();
     }
 
     @Override
@@ -67,25 +71,32 @@ public class MainActivity extends AppCompatActivity {
 
     public void requestProdutos() {
         // A request for retrieving a JSONObject.
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
-                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
+                Request.Method.GET, url,
+                null,
+                new Response.Listener<JSONArray>() {
 
                     @Override
-                    public void onResponse(JSONObject response) {
+                    public void onResponse(JSONArray response) {
                         System.out.println("SUCESSO: "+ response.toString());
-                        /*Gson gson = new Gson();
-                        searchResponse = gson.fromJson(response.toString(), SearchResponse.class);
-                        anuncios = searchResponse.getAnuncios();
-                        anunciosListView = (ListView) findViewById(R.id.listView);
-                        adapter = new AdapterProduto(anuncios, MainActivity.this);
-                        anunciosListView.setAdapter(adapter);
 
-                        anunciosListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                            @Override
-                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                irParaAnuncio(view, position);
-                            }
-                        });*/
+                        try {
+                            Gson gson = new Gson();
+                            Anuncio[] anunciosArray = gson.fromJson(response.toString(), Anuncio[].class);
+                            anuncios = Arrays.asList(anunciosArray);
+                            anunciosListView = (ListView) findViewById(R.id.listView);
+                            adapter = new AdapterProduto(anuncios, MainActivity.this);
+                            anunciosListView.setAdapter(adapter);
+
+                            anunciosListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                    irParaAnuncio(view, position);
+                                }
+                            });
+                        } catch (Exception je) {
+                            je.printStackTrace();
+                        }
                     }
                 }, new Response.ErrorListener() {
 
@@ -96,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
                 });
 
         // Access the RequestQueue through my singleton class.
-        RequestQueueSingleton.getInstance(this).addToRequestQueue(jsonObjectRequest);
+        RequestQueueSingleton.getInstance(this).addToRequestQueue(jsonArrayRequest);
     }
 
     /**
