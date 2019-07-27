@@ -18,17 +18,16 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.arnaldojunior.ecotrade.databinding.ActivityMainBinding;
 import com.arnaldojunior.ecotrade.model.Anuncio;
 import com.arnaldojunior.ecotrade.model.SearchResponse;
+import com.arnaldojunior.ecotrade.util.SessionManager;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -41,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
     private List<Anuncio> anuncios;
     private AdapterProduto adapter;
     private ActivityMainBinding binding;
+    private SessionManager session;
+    private HashMap<String, String> usuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +52,14 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.main_toolbar);
         setSupportActionBar(toolbar);
 
+        session = new SessionManager(getApplicationContext());
+        if (session.isLoggedIn()) {
+            System.out.println("USUÁRIO LOGADO.");
+            usuario = session.getUserDetails();
+            System.out.println("SEJA BEM-VINDO: "+ usuario);
+        }
+
+        // Resquests a general products list.
         this.requestProdutos();
     }
 
@@ -70,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void requestProdutos() {
-        // A request for retrieving a JSONObject.
+        // A request for retrieving a JSONArray.
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
                 Request.Method.GET, url,
                 null,

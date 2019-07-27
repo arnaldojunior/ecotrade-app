@@ -16,6 +16,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.arnaldojunior.ecotrade.databinding.ActivityCadastroBinding;
 import com.arnaldojunior.ecotrade.model.Usuario;
+import com.arnaldojunior.ecotrade.util.SessionManager;
 import com.google.android.material.button.MaterialButton;
 import com.google.gson.Gson;
 
@@ -30,6 +31,7 @@ public class CadastroActivity extends AppCompatActivity {
     private static final String URL = "http://192.168.0.15:8080/EcoTradeServer/rest/usuario";
     private Gson gson;
     private Usuario usuarioCadastrado;
+    private SessionManager session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,7 +84,7 @@ public class CadastroActivity extends AppCompatActivity {
     }
 
     /**
-     * Shows a confirmation message to user by a AlertDialog.
+     * Shows a confirmation message to user by an AlertDialog.
      */
     public void showConfirmationDialog() {
 
@@ -109,8 +111,9 @@ public class CadastroActivity extends AppCompatActivity {
      * Go to the MainActivity by passing the registered object.
      */
     public void goToMainActivity() {
+        session = new SessionManager(getApplicationContext());
+        session.createLoginSession(usuarioCadastrado.getNome(), usuarioCadastrado.getEmail());
         Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra("usuario", usuarioCadastrado);
         startActivity(intent);
     }
 }
