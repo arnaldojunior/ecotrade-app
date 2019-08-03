@@ -114,6 +114,8 @@ public class CadastroActivity extends AppCompatActivity {
         session = new SessionManager(getApplicationContext());
         session.createLoginSession(usuarioCadastrado.getNome(), usuarioCadastrado.getEmail());
         Intent intent = new Intent(this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
 }
