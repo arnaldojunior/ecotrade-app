@@ -2,7 +2,7 @@
     <string name="app_name">EcoTrade</string>
     <string name="informatica_icon">informática</string>
     <string name="eletronicos_icon">eletrônicos</string>
-    <string name="celulares_icon">celulares</string>
+    <string name="celulares_icon">telefonia</string>
     <string name="categoria_label">Categoria: </string>
     <string name="inserir_anuncio">Inserir Anúncio</string>
     <string name="minha_conta">Minha Conta</string>

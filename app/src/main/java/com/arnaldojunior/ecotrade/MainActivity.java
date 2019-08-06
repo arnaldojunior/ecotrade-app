@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
     private String categoriaSelecionada = "geral";
     private ImageButton botao;
-    private String url = "http://192.168.0.15:8080/EcoTradeServer/rest/anuncio";
+    private static final String URL = "http://192.168.0.15:8080/EcoTradeServer/rest/anuncio/";
     private ListView anunciosListView;
     private SearchResponse searchResponse;
     private List<Anuncio> anuncios;
@@ -59,8 +59,8 @@ public class MainActivity extends AppCompatActivity {
             System.out.println("SEJA BEM-VINDO: "+ usuario);
         }
 
-        // Resquests a general products list.
-        this.requestProdutos();
+        // Requests a general products list.
+        this.requestProdutos(URL);
     }
 
     @Override
@@ -71,14 +71,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Informa a categoria selecionada.
+     * Fetches all ads by the selected category and show it to user.
      * @param view
      */
     public void buscarListaPorCategoria(View view) {
         binding.content.categoriaTV.setText(view.getContentDescription().toString());
+        this.requestProdutos(URL.concat(view.getContentDescription().toString()));
     }
 
-    public void requestProdutos() {
+    public void requestProdutos(String url) {
+        System.out.println("URL: "+ url);
+
         // A request for retrieving a JSONArray.
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
                 Request.Method.GET, url,
