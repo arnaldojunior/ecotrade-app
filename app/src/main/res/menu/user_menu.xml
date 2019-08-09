@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/add_anuncio"
+        android:title="@string/menu_add_ad"
+        app:showAsAction="never"/>
+
+    <item android:id="@+id/your_ads"
+        android:title="@string/menu_your_ads"
+        app:showAsAction="never"/>
+
+    <item android:id="@+id/your_count"
+        android:title="@string/menu_edit_count"
+        app:showAsAction="never"/>
+
+    <item android:id="@+id/exit"
+        android:title="@string/menu_logout"
+        android:onClick="logout"
+        app:showAsAction="never"/>
+</menu>

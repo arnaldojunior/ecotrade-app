@@ -2,9 +2,12 @@
     <string name="app_name">EcoTrade</string>
 
     <!-- MENU -->
-    <string name="add_anuncio">Adicionar Anúncio</string>
-    <string name="acessar_conta">Acessar Conta</string>
+    <string name="menu_add_ad">Adicionar Anúncio</string>
+    <string name="menu_your_ads">Seus Anúncios</string>
+    <string name="menu_login">Acessar Conta</string>
     <string name="menu_signup">Cadastrar-se</string>
+    <string name="menu_edit_count">Sua Conta</string>
+    <string name="menu_logout">Sair</string>
 
     <!-- ACTIVITY TITLES -->
     <string name="title_activity_login">Entrar</string>

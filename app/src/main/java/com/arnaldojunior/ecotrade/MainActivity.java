@@ -55,11 +55,6 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         session = new SessionManager(getApplicationContext());
-        if (session.isLoggedIn()) {
-            System.out.println("USUÁRIO LOGADO.");
-            usuario = session.getUserDetails();
-            System.out.println("SEJA BEM-VINDO: "+ usuario);
-        }
 
         // Requests a general products list.
         this.requestProdutos(URL);
@@ -68,7 +63,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main_menu, menu);
+
+        if (session.isLoggedIn()) {
+            usuario = session.getUserDetails();
+            System.out.println("SEJA BEM-VINDO: "+ usuario);
+            inflater.inflate(R.menu.user_menu, menu);
+        } else {
+            inflater.inflate(R.menu.main_menu, menu);
+        }
         return true;
     }
 
@@ -143,5 +145,11 @@ public class MainActivity extends AppCompatActivity {
     public void goToSignupActivity(MenuItem item) {
         Intent intent = new Intent(this, SignupActivity.class);
         startActivity(intent);
+    }
+
+    public void logout(MenuItem item) {
+        session.logoutUser();
+        finish();
+        startActivity(getIntent());
     }
 }
