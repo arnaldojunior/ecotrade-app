@@ -1,4 +1,4 @@
-package com.arnaldojunior.ecotrade;
+package com.arnaldojunior.ecotrade.util;
 
 import android.app.Activity;
 import android.view.View;
@@ -7,6 +7,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.arnaldojunior.ecotrade.R;
 import com.arnaldojunior.ecotrade.model.Anuncio;
 
 import java.util.List;

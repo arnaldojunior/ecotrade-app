@@ -9,14 +9,14 @@ import android.widget.TextView;
 
 import com.arnaldojunior.ecotrade.model.Anuncio;
 
-public class DetailActivity extends AppCompatActivity {
+public class AdActivity extends AppCompatActivity {
 
     private Anuncio anuncio;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detail);
+        setContentView(R.layout.activity_ad);
 
         Toolbar toolbar = findViewById(R.id.detail_toolbar);
         setSupportActionBar(toolbar);

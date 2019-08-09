@@ -4,31 +4,25 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.arnaldojunior.ecotrade.databinding.ActivityLoginBinding;
 import com.arnaldojunior.ecotrade.model.Usuario;
+import com.arnaldojunior.ecotrade.util.RequestQueueSingleton;
 import com.arnaldojunior.ecotrade.util.SessionManager;
-import com.google.android.material.button.MaterialButton;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
+import com.arnaldojunior.ecotrade.util.TextInputValidator;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.Gson;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.DataBindingUtil;
 
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -53,11 +47,11 @@ public class LoginActivity extends AppCompatActivity {
         binding.loginContent.loginCadastrarTV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goToCadastroActivity();
+                goToSignupActivity();
             }
         });
 
-        binding.loginContent.loginEntrarButton.setOnClickListener(new View.OnClickListener() {
+        binding.loginContent.loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 doLogin();
@@ -103,12 +97,26 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public boolean validateFields() {
-        if (binding.loginContent.loginEmailInput.getEditText().getText() != null
-            && binding.loginContent.loginSenhaInput.getEditText().getText() != null) {
-            return true;
+
+        TextInputLayout emailLayout = binding.loginContent.loginEmailInput;
+        TextInputLayout senhaLayout = binding.loginContent.loginSenhaInput;
+
+        if (TextInputValidator.isEmpty(emailLayout.getEditText())) {
+            emailLayout.setError("Campo obrigatório!");
+            emailLayout.setErrorEnabled(true);
+            return false;
         } else {
+            emailLayout.setErrorEnabled(false);
+        }
+        if (TextInputValidator.isEmpty(senhaLayout.getEditText())) {
+            senhaLayout.setError("Campo obrigatório!");
+            senhaLayout.setErrorEnabled(true);
             return false;
         }
+        else {
+            senhaLayout.setErrorEnabled(false);
+        }
+        return true;
     }
 
     /**
@@ -122,8 +130,8 @@ public class LoginActivity extends AppCompatActivity {
                 .equalsIgnoreCase(usuarioBuscado.getSenha()) ? true : false;
     }
 
-    public void goToCadastroActivity() {
-        Intent intent = new Intent(this, CadastroActivity.class);
+    public void goToSignupActivity() {
+        Intent intent = new Intent(this, SignupActivity.class);
         startActivity(intent);
     }
 

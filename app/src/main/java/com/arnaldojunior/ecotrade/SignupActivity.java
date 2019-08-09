@@ -14,8 +14,9 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.arnaldojunior.ecotrade.databinding.ActivityCadastroBinding;
+import com.arnaldojunior.ecotrade.databinding.ActivitySignupBinding;
 import com.arnaldojunior.ecotrade.model.Usuario;
+import com.arnaldojunior.ecotrade.util.RequestQueueSingleton;
 import com.arnaldojunior.ecotrade.util.SessionManager;
 import com.google.android.material.button.MaterialButton;
 import com.google.gson.Gson;
@@ -25,9 +26,9 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CadastroActivity extends AppCompatActivity {
+public class SignupActivity extends AppCompatActivity {
 
-    private ActivityCadastroBinding binding;
+    private ActivitySignupBinding binding;
     private static final String URL = "http://192.168.0.15:8080/EcoTradeServer/rest/usuario";
     private Gson gson;
     private Usuario usuarioCadastrado;
@@ -36,7 +37,7 @@ public class CadastroActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_cadastro);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_signup);
 
         Toolbar toolbar = findViewById(R.id.cadastro_toolbar);
         setSupportActionBar(toolbar);
@@ -78,7 +79,7 @@ public class CadastroActivity extends AppCompatActivity {
                                 System.out.println("Erro ao enviar objeto Json: "+ error);
                             }
                         });
-                RequestQueueSingleton.getInstance(CadastroActivity.this).addToRequestQueue(jsonObjectRequest);
+                RequestQueueSingleton.getInstance(SignupActivity.this).addToRequestQueue(jsonObjectRequest);
             }
         });
     }

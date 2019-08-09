@@ -10,8 +10,8 @@
         android:theme="@style/AppTheme.Material"
         android:padding="10dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:context=".CadastroActivity"
-        tools:showIn="@layout/activity_cadastro">
+        tools:context=".SignupActivity"
+        tools:showIn="@layout/activity_signup">
 
         <TextView
             android:id="@+id/cadastroTitleTV"

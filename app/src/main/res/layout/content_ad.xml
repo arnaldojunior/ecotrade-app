@@ -6,8 +6,8 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DetailActivity"
-    tools:showIn="@layout/activity_detail">
+    tools:context=".AdActivity"
+    tools:showIn="@layout/activity_ad">
 
     <!-- SLIDE DE IMAGENS -->
     <ScrollView

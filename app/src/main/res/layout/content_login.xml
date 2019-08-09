@@ -64,7 +64,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/loginEntrarButton"
+            android:id="@+id/loginButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/login_entrar"
@@ -80,7 +80,7 @@
             android:orientation="horizontal"
             android:gravity="center"
             android:layout_marginTop="10dp"
-            app:layout_constraintTop_toBottomOf="@id/loginEntrarButton"
+            app:layout_constraintTop_toBottomOf="@id/loginButton"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
 

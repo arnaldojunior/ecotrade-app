@@ -1,5 +1,17 @@
 <resources>
     <string name="app_name">EcoTrade</string>
+
+    <!-- MENU -->
+    <string name="add_anuncio">Adicionar Anúncio</string>
+    <string name="acessar_conta">Acessar Conta</string>
+    <string name="menu_signup">Cadastrar-se</string>
+
+    <!-- ACTIVITY TITLES -->
+    <string name="title_activity_login">Entrar</string>
+    <string name="title_activity_detail">Anúncio</string>
+    <string name="title_activity_signup">Cadastro</string>
+
+    <!-- MAIN ACTIVITY -->
     <string name="informatica_icon">informática</string>
     <string name="eletronicos_icon">eletrônicos</string>
     <string name="celulares_icon">telefonia</string>
@@ -7,17 +19,7 @@
     <string name="inserir_anuncio">Inserir Anúncio</string>
     <string name="minha_conta">Minha Conta</string>
 
-    <!-- ACTIVITY TITLES -->
-    <string name="title_activity_login">Entrar</string>
-    <string name="title_activity_detail">Anúncio</string>
-    <string name="title_activity_signup">Cadastro</string>
-
-    <!-- MENU -->
-    <string name="add_anuncio">Adicionar Anúncio</string>
-    <string name="acessar_conta">Acessar Conta</string>
-    <string name="menu_signup">Cadastrar-se</string>
-
-    <!-- LOGIN -->
+    <!-- LOGIN ACTIVITY -->
     <string name="login_title">Acessar sua conta</string>
     <string name="login_email">E-mail</string>
     <string name="login_senha">Senha</string>
@@ -25,7 +27,7 @@
     <string name="login_sem_conta">Não tem conta?</string>
     <string name="login_cadastrar">Cadastre-se!</string>
 
-    <!-- CADASTRO DE USUÁRIO -->
+    <!-- CADASTRO ACTIVITY -->
     <string name="cadastro_title">Preencha os dados abaixo</string>
     <string name="cadastro_nome">Nome*</string>
     <string name="cadastro_cpf">CPF*</string>

@@ -14,7 +14,7 @@
         android:usesCleartextTraffic="true">
 
         <activity
-            android:name=".CadastroActivity"
+            android:name=".SignupActivity"
             android:label="@string/title_activity_signup"
             android:parentActivityName=".MainActivity"/>
         <activity
@@ -22,7 +22,7 @@
             android:label="@string/title_activity_login"
             android:parentActivityName=".MainActivity"/>
         <activity
-            android:name=".DetailActivity"
+            android:name=".AdActivity"
             android:label="@string/title_activity_detail"
             android:parentActivityName=".MainActivity" />
         <activity android:name=".MainActivity">

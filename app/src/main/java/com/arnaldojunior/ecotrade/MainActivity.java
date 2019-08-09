@@ -21,6 +21,8 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.arnaldojunior.ecotrade.databinding.ActivityMainBinding;
 import com.arnaldojunior.ecotrade.model.Anuncio;
 import com.arnaldojunior.ecotrade.model.SearchResponse;
+import com.arnaldojunior.ecotrade.util.AdapterProduto;
+import com.arnaldojunior.ecotrade.util.RequestQueueSingleton;
 import com.arnaldojunior.ecotrade.util.SessionManager;
 import com.google.gson.Gson;
 
@@ -76,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
      */
     public void buscarListaPorCategoria(View view) {
         binding.content.categoriaTV.setText(view.getContentDescription().toString());
-        this.requestProdutos(URL.concat(view.getContentDescription().toString()));
+        //this.requestProdutos(URL.concat(view.getContentDescription().toString()));
     }
 
     public void requestProdutos(String url) {
@@ -103,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
                             anunciosListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                 @Override
                                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                    irParaAnuncio(view, position);
+                                    goToAdActivity(view, position);
                                 }
                             });
                         } catch (Exception je) {
@@ -123,27 +125,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Inicializa outra activity passando um objeto Anuncio como parâmetro.
+     * Go to AdActivity by passing the selected ad as parameter.
      * @param view
      * @param position
      */
-    public void irParaAnuncio(View view, int position) {
-        Intent intent = new Intent(this, DetailActivity.class);
+    public void goToAdActivity(View view, int position) {
+        Intent intent = new Intent(this, AdActivity.class);
         intent.putExtra("Anuncio", anuncios.get(position));
         startActivity(intent);
     }
 
-    public void irParaLogin(MenuItem item) {
+    public void goToLoginActivity(MenuItem item) {
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
     }
 
-    public void irParaCadastro(MenuItem item) {
-        Intent intent = new Intent(this, CadastroActivity.class);
+    public void goToSignupActivity(MenuItem item) {
+        Intent intent = new Intent(this, SignupActivity.class);
         startActivity(intent);
-    }
-
-    public void addAnuncio(MenuItem item) {
-
     }
 }
