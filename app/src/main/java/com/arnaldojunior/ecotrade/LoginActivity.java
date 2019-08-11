@@ -43,23 +43,9 @@ public class LoginActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
-
-        binding.loginContent.loginCadastrarTV.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                goToSignupActivity();
-            }
-        });
-
-        binding.loginContent.loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                doLogin();
-            }
-        });
     }
 
-    public void doLogin() {
+    public void doLogin(View view) {
         if (validateFields()) {
 
             String email = binding.loginContent.loginEmailInput.getEditText().getText().toString();
@@ -96,27 +82,22 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Check if all inputs are valid.
+     * @return a boolean
+     */
     public boolean validateFields() {
-
         TextInputLayout emailLayout = binding.loginContent.loginEmailInput;
         TextInputLayout senhaLayout = binding.loginContent.loginSenhaInput;
+        boolean isAllValids = true;
 
-        if (TextInputValidator.isEmpty(emailLayout.getEditText())) {
-            emailLayout.setError("Campo obrigatório!");
-            emailLayout.setErrorEnabled(true);
-            return false;
-        } else {
-            emailLayout.setErrorEnabled(false);
+        if (!TextInputValidator.validate(emailLayout, true, false)) {
+            isAllValids = false;
         }
-        if (TextInputValidator.isEmpty(senhaLayout.getEditText())) {
-            senhaLayout.setError("Campo obrigatório!");
-            senhaLayout.setErrorEnabled(true);
-            return false;
+        if (!TextInputValidator.validate(senhaLayout, false, true)) {
+            isAllValids = false;
         }
-        else {
-            senhaLayout.setErrorEnabled(false);
-        }
-        return true;
+        return isAllValids;
     }
 
     /**
@@ -130,7 +111,7 @@ public class LoginActivity extends AppCompatActivity {
                 .equalsIgnoreCase(usuarioBuscado.getSenha()) ? true : false;
     }
 
-    public void goToSignupActivity() {
+    public void goToSignupActivity(View view) {
         Intent intent = new Intent(this, SignupActivity.class);
         startActivity(intent);
     }

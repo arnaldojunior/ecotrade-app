@@ -14,7 +14,7 @@
         tools:showIn="@layout/activity_signup">
 
         <TextView
-            android:id="@+id/cadastroTitleTV"
+            android:id="@+id/signupTitleTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/cadastro_title"
@@ -25,7 +25,7 @@
             app:layout_constraintTop_toTopOf="parent"/>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/cadastroNomeInput"
+            android:id="@+id/signupNomeInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -34,67 +34,67 @@
             app:boxBackgroundColor="@color/tea"
             app:boxStrokeColor="@color/input_stroke_default"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/cadastroTitleTV"
+            app:layout_constraintTop_toBottomOf="@id/signupTitleTV"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/input_text_default"
-                android:inputType="text"/>
+                android:inputType="textPersonName"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/cadastroCpfInput"
+            android:id="@+id/signupCpfInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="10dp"
             android:hint="@string/cadastro_cpf"
             android:textColorHint="@color/input_hint_default"
             app:boxBackgroundColor="@color/tea"
             app:boxStrokeColor="@color/input_stroke_default"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/cadastroNomeInput"
+            app:layout_constraintTop_toBottomOf="@id/signupNomeInput"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/input_text_default"
-                android:inputType="text"/>
+                android:inputType="number"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/cadastroTelefoneInput"
+            android:id="@+id/signupTelefoneInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="10dp"
             android:hint="@string/cadastro_telefone"
             android:textColorHint="@color/input_hint_default"
             app:boxBackgroundColor="@color/tea"
             app:boxStrokeColor="@color/input_stroke_default"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/cadastroCpfInput"
+            app:layout_constraintTop_toBottomOf="@id/signupCpfInput"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/input_text_default"
-                android:inputType="text"/>
+                android:inputType="phone"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/cadastroEmailInput"
+            android:id="@+id/signupEmailInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="10dp"
             android:hint="@string/cadastro_email"
             android:textColorHint="@color/input_hint_default"
             app:boxBackgroundColor="@color/tea"
             app:boxStrokeColor="@color/input_stroke_default"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/cadastroTelefoneInput"
+            app:layout_constraintTop_toBottomOf="@id/signupTelefoneInput"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -105,16 +105,16 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/cadastroSenhaInput"
+            android:id="@+id/signupSenhaInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="10dp"
             android:hint="@string/cadastro_senha"
             android:textColorHint="@color/input_hint_default"
             app:boxBackgroundColor="@color/tea"
             app:boxStrokeColor="@color/input_stroke_default"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/cadastroEmailInput"
+            app:layout_constraintTop_toBottomOf="@id/signupEmailInput"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -125,13 +125,14 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/entrar_button"
+            android:id="@+id/signupSendButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/cadastro_button"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="15dp"
+            android:onClick="sendForm"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/cadastroSenhaInput"
+            app:layout_constraintTop_toBottomOf="@id/signupSenhaInput"
             app:layout_constraintEnd_toEndOf="parent"
             android:backgroundTint="@color/button_default"/>
 

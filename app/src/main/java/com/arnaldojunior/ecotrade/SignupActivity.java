@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -16,9 +17,11 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.arnaldojunior.ecotrade.databinding.ActivitySignupBinding;
 import com.arnaldojunior.ecotrade.model.Usuario;
+import com.arnaldojunior.ecotrade.util.Mask;
 import com.arnaldojunior.ecotrade.util.RequestQueueSingleton;
 import com.arnaldojunior.ecotrade.util.SessionManager;
-import com.google.android.material.button.MaterialButton;
+import com.arnaldojunior.ecotrade.util.TextInputValidator;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.Gson;
 
 import org.json.JSONObject;
@@ -44,44 +47,80 @@ public class SignupActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        MaterialButton botaoEntrar = findViewById(R.id.entrar_button);
-        botaoEntrar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Usuario usuario = new Usuario();
+        // Add masks to inputs
+        EditText foneEditText = binding.cadastroContent.signupTelefoneInput.getEditText();
+        foneEditText.addTextChangedListener(Mask.insert("(##)#####-####", foneEditText));
 
-                usuario.setNome(binding.cadastroContent.cadastroNomeInput.getEditText().getText().toString());
-                usuario.setCpf(binding.cadastroContent.cadastroCpfInput.getEditText().getText().toString());
-                usuario.setTelefone(binding.cadastroContent.cadastroTelefoneInput.getEditText().getText().toString());
-                usuario.setEmail(binding.cadastroContent.cadastroTelefoneInput.getEditText().getText().toString());
-                usuario.setSenha(binding.cadastroContent.cadastroSenhaInput.getEditText().getText().toString());
+        EditText cpfEditText = binding.cadastroContent.signupCpfInput.getEditText();
+        cpfEditText.addTextChangedListener(Mask.insert("###.###.###-##", cpfEditText));
+    }
 
-                Map<String, String> postParam = new HashMap<String, String>();
-                postParam.put("nome", usuario.getNome());
-                postParam.put("cpf", usuario.getCpf());
-                postParam.put("telefone", usuario.getTelefone());
-                postParam.put("email", usuario.getEmail());
-                postParam.put("senha", usuario.getSenha());
+    public void sendForm(View view) {
+        if (validateFields()) {
+            Usuario usuario = new Usuario();
 
-                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
-                        Request.Method.POST, URL, new JSONObject(postParam),
-                        new Response.Listener<JSONObject>() {
-                            @Override
-                            public void onResponse(JSONObject response) {
-                                System.out.println("Sucesso ao enviar objeto: "+ response);
-                                gson = new Gson();
-                                usuarioCadastrado = gson.fromJson(response.toString(), Usuario.class);
-                                showConfirmationDialog();
-                            }
-                        }, new Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-                                System.out.println("Erro ao enviar objeto Json: "+ error);
-                            }
-                        });
-                RequestQueueSingleton.getInstance(SignupActivity.this).addToRequestQueue(jsonObjectRequest);
-            }
-        });
+            usuario.setNome(binding.cadastroContent.signupNomeInput.getEditText().getText().toString());
+            usuario.setCpf(binding.cadastroContent.signupCpfInput.getEditText().getText().toString());
+            usuario.setTelefone(binding.cadastroContent.signupTelefoneInput.getEditText().getText().toString());
+            usuario.setEmail(binding.cadastroContent.signupEmailInput.getEditText().getText().toString());
+            usuario.setSenha(binding.cadastroContent.signupSenhaInput.getEditText().getText().toString());
+
+            Map<String, String> postParam = new HashMap<String, String>();
+            postParam.put("nome", usuario.getNome());
+            postParam.put("cpf", Mask.unmask(usuario.getCpf()));
+            postParam.put("telefone", usuario.getTelefone());
+            postParam.put("email", usuario.getEmail());
+            postParam.put("senha", usuario.getSenha());
+
+            System.out.println("USUÁRIO: "+ postParam);
+
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                    Request.Method.POST, URL, new JSONObject(postParam),
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            gson = new Gson();
+                            usuarioCadastrado = gson.fromJson(response.toString(), Usuario.class);
+                            showConfirmationDialog();
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    System.out.println("Erro ao enviar objeto Json: "+ error);
+                }
+            });
+            RequestQueueSingleton.getInstance(SignupActivity.this).addToRequestQueue(jsonObjectRequest);
+        }
+    }
+
+    /**
+     * Check if all inputs are valid.
+     * @return a boolean
+     */
+    public boolean validateFields() {
+        TextInputLayout nomeLayout = binding.cadastroContent.signupNomeInput;
+        TextInputLayout cpfLayout = binding.cadastroContent.signupCpfInput;
+        TextInputLayout foneLayout = binding.cadastroContent.signupTelefoneInput;
+        TextInputLayout emailLayout = binding.cadastroContent.signupEmailInput;
+        TextInputLayout senhaLayout = binding.cadastroContent.signupSenhaInput;
+        boolean isAllValids = true;
+
+        if (!TextInputValidator.validate(nomeLayout, false, false)) {
+            isAllValids = false;
+        }
+        if (!TextInputValidator.validate(cpfLayout, false, false)) {
+            isAllValids = false;
+        }
+        if (!TextInputValidator.validate(foneLayout, false, false)) {
+            isAllValids = false;
+        }
+        if (!TextInputValidator.validate(emailLayout, true, false)) {
+            isAllValids = false;
+        }
+        if (!TextInputValidator.validate(senhaLayout, false, true)) {
+            isAllValids = false;
+        }
+        return isAllValids;
     }
 
     /**

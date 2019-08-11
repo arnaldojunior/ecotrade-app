@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
      */
     public void buscarListaPorCategoria(View view) {
         binding.content.categoriaTV.setText(view.getContentDescription().toString());
-        //this.requestProdutos(URL.concat(view.getContentDescription().toString()));
+        this.requestProdutos(URL.concat(view.getContentDescription().toString()));
     }
 
     public void requestProdutos(String url) {
