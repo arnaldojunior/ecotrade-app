@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">EcoTrade</string>
 
+    <!-- WEB SERVICE -->
+    <string name="webservice">http://192.168.0.15:8080/EcoTradeServer/rest/</string>
+
     <!-- MENU -->
     <string name="menu_add_ad">Adicionar Anúncio</string>
     <string name="menu_your_ads">Seus Anúncios</string>

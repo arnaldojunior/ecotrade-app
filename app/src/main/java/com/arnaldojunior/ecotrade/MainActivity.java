@@ -1,6 +1,5 @@
 package com.arnaldojunior.ecotrade;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -22,6 +21,7 @@ import com.arnaldojunior.ecotrade.databinding.ActivityMainBinding;
 import com.arnaldojunior.ecotrade.model.Anuncio;
 import com.arnaldojunior.ecotrade.model.SearchResponse;
 import com.arnaldojunior.ecotrade.util.AdapterProduto;
+import com.arnaldojunior.ecotrade.util.NavigationModule;
 import com.arnaldojunior.ecotrade.util.RequestQueueSingleton;
 import com.arnaldojunior.ecotrade.util.SessionManager;
 import com.google.gson.Gson;
@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
     private String categoriaSelecionada = "geral";
     private ImageButton botao;
-    private static final String URL = "http://192.168.0.15:8080/EcoTradeServer/rest/anuncio/";
+    private String url;
     private ListView anunciosListView;
     private SearchResponse searchResponse;
     private List<Anuncio> anuncios;
@@ -56,8 +56,9 @@ public class MainActivity extends AppCompatActivity {
 
         session = new SessionManager(getApplicationContext());
 
+        url = getResources().getString(R.string.webservice).concat("anuncio/");
         // Requests a general products list.
-        this.requestProdutos(URL);
+        this.requestProdutos(url);
     }
 
     @Override
@@ -80,22 +81,17 @@ public class MainActivity extends AppCompatActivity {
      */
     public void buscarListaPorCategoria(View view) {
         binding.content.categoriaTV.setText(view.getContentDescription().toString());
-        this.requestProdutos(URL.concat(view.getContentDescription().toString()));
+        this.requestProdutos(url.concat(view.getContentDescription().toString()));
     }
 
     public void requestProdutos(String url) {
-        System.out.println("URL: "+ url);
-
         // A request for retrieving a JSONArray.
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
                 Request.Method.GET, url,
                 null,
                 new Response.Listener<JSONArray>() {
-
                     @Override
                     public void onResponse(JSONArray response) {
-                        System.out.println("SUCESSO: "+ response.toString());
-
                         try {
                             Gson gson = new Gson();
                             Anuncio[] anunciosArray = gson.fromJson(response.toString(), Anuncio[].class);
@@ -115,7 +111,6 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 }, new Response.ErrorListener() {
-
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         System.out.println("ERRO: "+ error);
@@ -126,25 +121,16 @@ public class MainActivity extends AppCompatActivity {
         RequestQueueSingleton.getInstance(this).addToRequestQueue(jsonArrayRequest);
     }
 
-    /**
-     * Go to AdActivity by passing the selected ad as parameter.
-     * @param view
-     * @param position
-     */
     public void goToAdActivity(View view, int position) {
-        Intent intent = new Intent(this, AdActivity.class);
-        intent.putExtra("Anuncio", anuncios.get(position));
-        startActivity(intent);
+        NavigationModule.goToAdActivity(this, anuncios.get(position));
     }
 
     public void goToLoginActivity(MenuItem item) {
-        Intent intent = new Intent(this, LoginActivity.class);
-        startActivity(intent);
+        NavigationModule.goToLoginActivity(this);
     }
 
     public void goToSignupActivity(MenuItem item) {
-        Intent intent = new Intent(this, SignupActivity.class);
-        startActivity(intent);
+        NavigationModule.goToSignupActivity(this);
     }
 
     public void logout(MenuItem item) {

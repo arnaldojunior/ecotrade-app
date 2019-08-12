@@ -6,10 +6,10 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.DataBindingUtil;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -18,6 +18,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.arnaldojunior.ecotrade.databinding.ActivitySignupBinding;
 import com.arnaldojunior.ecotrade.model.Usuario;
 import com.arnaldojunior.ecotrade.util.Mask;
+import com.arnaldojunior.ecotrade.util.NavigationModule;
 import com.arnaldojunior.ecotrade.util.RequestQueueSingleton;
 import com.arnaldojunior.ecotrade.util.SessionManager;
 import com.arnaldojunior.ecotrade.util.TextInputValidator;
@@ -32,7 +33,7 @@ import java.util.Map;
 public class SignupActivity extends AppCompatActivity {
 
     private ActivitySignupBinding binding;
-    private static final String URL = "http://192.168.0.15:8080/EcoTradeServer/rest/usuario";
+    private String url;
     private Gson gson;
     private Usuario usuarioCadastrado;
     private SessionManager session;
@@ -46,6 +47,8 @@ public class SignupActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        url = getResources().getString(R.string.webservice).concat("usuario");
 
         // Add masks to inputs
         EditText foneEditText = binding.cadastroContent.signupTelefoneInput.getEditText();
@@ -72,10 +75,8 @@ public class SignupActivity extends AppCompatActivity {
             postParam.put("email", usuario.getEmail());
             postParam.put("senha", usuario.getSenha());
 
-            System.out.println("USUÁRIO: "+ postParam);
-
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
-                    Request.Method.POST, URL, new JSONObject(postParam),
+                    Request.Method.POST, url, new JSONObject(postParam),
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
@@ -86,7 +87,7 @@ public class SignupActivity extends AppCompatActivity {
                     }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    System.out.println("Erro ao enviar objeto Json: "+ error);
+                    Toast.makeText(getApplicationContext(), "Erro ao cadastrar!", Toast.LENGTH_SHORT).show();
                 }
             });
             RequestQueueSingleton.getInstance(SignupActivity.this).addToRequestQueue(jsonObjectRequest);
@@ -127,7 +128,6 @@ public class SignupActivity extends AppCompatActivity {
      * Shows a confirmation message to user by an AlertDialog.
      */
     public void showConfirmationDialog() {
-
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Cadastro realizado com sucesso!")
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -153,9 +153,6 @@ public class SignupActivity extends AppCompatActivity {
     public void goToMainActivity() {
         session = new SessionManager(getApplicationContext());
         session.createLoginSession(usuarioCadastrado.getNome(), usuarioCadastrado.getEmail());
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
+        NavigationModule.goToMainActivity(this);
     }
 }
