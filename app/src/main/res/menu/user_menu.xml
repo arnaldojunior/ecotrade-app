@@ -12,6 +12,7 @@
 
     <item android:id="@+id/your_count"
         android:title="@string/menu_edit_count"
+        android:onClick="goToSignupActivity"
         app:showAsAction="never"/>
 
     <item android:id="@+id/exit"

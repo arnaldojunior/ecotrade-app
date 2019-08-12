@@ -34,8 +34,8 @@ public class SignupActivity extends AppCompatActivity {
 
     private ActivitySignupBinding binding;
     private String url;
-    private Gson gson;
-    private Usuario usuarioCadastrado;
+    private Gson gson = new Gson();
+    private Usuario usuario = new Usuario();
     private SessionManager session;
 
     @Override
@@ -45,12 +45,19 @@ public class SignupActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.cadastro_toolbar);
         setSupportActionBar(toolbar);
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        url = getResources().getString(R.string.webservice).concat("usuario");
+        url = getResources().getString(R.string.webservice).concat("usuario/");
+        addMasksToInputs();
 
-        // Add masks to inputs
+        session = new SessionManager(getApplicationContext());
+        if (session.isLoggedIn()) {
+            HashMap<String, String> credentials = session.getUserDetails();
+            requestUserByEmail(credentials.get("email"));
+        }
+    }
+
+    public void addMasksToInputs() {
         EditText foneEditText = binding.cadastroContent.signupTelefoneInput.getEditText();
         foneEditText.addTextChangedListener(Mask.insert("(##)#####-####", foneEditText));
 
@@ -60,8 +67,6 @@ public class SignupActivity extends AppCompatActivity {
 
     public void sendForm(View view) {
         if (validateFields()) {
-            Usuario usuario = new Usuario();
-
             usuario.setNome(binding.cadastroContent.signupNomeInput.getEditText().getText().toString());
             usuario.setCpf(binding.cadastroContent.signupCpfInput.getEditText().getText().toString());
             usuario.setTelefone(binding.cadastroContent.signupTelefoneInput.getEditText().getText().toString());
@@ -75,13 +80,16 @@ public class SignupActivity extends AppCompatActivity {
             postParam.put("email", usuario.getEmail());
             postParam.put("senha", usuario.getSenha());
 
+            if (usuario.getId() != null) {
+                postParam.put("id", usuario.getId().toString());
+            }
+
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                     Request.Method.POST, url, new JSONObject(postParam),
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
-                            gson = new Gson();
-                            usuarioCadastrado = gson.fromJson(response.toString(), Usuario.class);
+                            usuario = gson.fromJson(response.toString(), Usuario.class);
                             showConfirmationDialog();
                         }
                     }, new Response.ErrorListener() {
@@ -128,8 +136,9 @@ public class SignupActivity extends AppCompatActivity {
      * Shows a confirmation message to user by an AlertDialog.
      */
     public void showConfirmationDialog() {
+        String message = session.isLoggedIn() ? "Atualização realizada" : "Cadastro realizado";
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Cadastro realizado com sucesso!")
+        builder.setTitle(message.concat(" com sucesso!"))
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -147,12 +156,45 @@ public class SignupActivity extends AppCompatActivity {
         dialog.show();
     }
 
+    public void requestUserByEmail(String email) {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                0, url.concat("email/" + email), null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        usuario = gson.fromJson(response.toString(), Usuario.class);
+                        if (usuario.getId() != null) {
+                            loadUserData();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getApplicationContext(), "Erro ao buscar usuário!", Toast.LENGTH_SHORT).show();
+            }
+        });
+        RequestQueueSingleton.getInstance(SignupActivity.this).addToRequestQueue(jsonObjectRequest);
+    }
+
+    /**
+     * Load user data on form.
+     */
+    public void loadUserData() {
+        binding.cadastroContent.signupNomeInput.getEditText().setText(usuario.getNome());
+        binding.cadastroContent.signupCpfInput.getEditText().setText(usuario.getCpf());
+        binding.cadastroContent.signupTelefoneInput.getEditText().setText(usuario.getTelefone());
+        binding.cadastroContent.signupEmailInput.getEditText().setText(usuario.getEmail());
+        binding.cadastroContent.signupSenhaInput.getEditText().setText(usuario.getSenha());
+        binding.cadastroContent.signupSendButton.setText("ATUALIZAR");
+    }
+
     /**
      * Go to the MainActivity by passing the registered object.
      */
     public void goToMainActivity() {
-        session = new SessionManager(getApplicationContext());
-        session.createLoginSession(usuarioCadastrado.getNome(), usuarioCadastrado.getEmail());
+        if (!session.isLoggedIn()) {
+            session.createLoginSession(usuario.getNome(), usuario.getEmail());
+        }
         NavigationModule.goToMainActivity(this);
     }
 }
