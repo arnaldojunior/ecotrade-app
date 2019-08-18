@@ -2,7 +2,7 @@
     <string name="app_name">EcoTrade</string>
 
     <!-- WEB SERVICE -->
-    <string name="webservice">http://192.168.0.15:8080/EcoTradeServer/rest/</string>
+    <string name="webservice">http://192.168.15.5:8080/EcoTradeServer/rest/</string>
 
     <!-- MENU -->
     <string name="menu_add_ad">Adicionar Anúncio</string>
@@ -16,6 +16,8 @@
     <string name="title_activity_login">Entrar</string>
     <string name="title_activity_detail">Anúncio</string>
     <string name="title_activity_signup">Cadastro</string>
+    <string name="title_activity_new_ad">Novo Anúncio</string>
+    <string name="title_activity_your_ads">Seus Anúncios</string>
 
     <!-- MAIN ACTIVITY -->
     <string name="informatica_icon">informática</string>
@@ -33,7 +35,7 @@
     <string name="login_sem_conta">Não tem conta?</string>
     <string name="login_cadastrar">Cadastre-se!</string>
 
-    <!-- CADASTRO ACTIVITY -->
+    <!-- SIGNUP ACTIVITY -->
     <string name="cadastro_title">Preencha os dados abaixo</string>
     <string name="cadastro_nome">Nome*</string>
     <string name="cadastro_cpf">CPF*</string>
@@ -41,4 +43,32 @@
     <string name="cadastro_email">E-mail*</string>
     <string name="cadastro_senha">Senha*</string>
     <string name="cadastro_button">Cadastrar</string>
+
+    <!-- NEW AD ACTIVITY -->
+    <string name="new_ad_legend">Preencha os dados abaixo</string>
+    <string name="new_ad_titulo">Título*</string>
+    <string name="new_ad_descricao">Descrição</string>
+    <string name="new_ad_finalidade">Finalidade</string>
+    <string name="new_ad_finalidade_doar">DOAR</string>
+    <string name="new_ad_finalidade_vender">VENDER</string>
+    <string name="new_ad_valor">Valor (R$)</string>
+    <string name="new_ad_categoria">Categoria*</string>
+    <string name="new_ad_cidade">Cidade</string>
+    <string name="new_ad_estado">Estado</string>
+    <string name="new_ad_endereco">Endereço</string>
+    <string name="new_ad_logradouro">Logradouro</string>
+    <string name="new_ad_bairro">Bairro</string>
+    <string name="new_ad_cep">CEP</string>
+    <string name="new_ad_numero">Número</string>
+    <string name="new_ad_imagens">Imagens</string>
+
+    <!-- AD'S CATEGORIES -->
+    <string-array name="categories">
+        <item>informática</item>
+        <item>eletrônicos</item>
+        <item>telefonia</item>
+    </string-array>
+
+    <!-- ICONS DESCRIPTIONS -->
+    <string name="more_options">Mais opções</string>
 </resources>

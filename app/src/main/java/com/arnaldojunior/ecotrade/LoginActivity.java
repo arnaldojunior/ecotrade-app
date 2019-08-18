@@ -15,9 +15,9 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.Gson;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.DataBindingUtil;
 
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Toast;
 
@@ -35,18 +35,26 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login);
 
-        Toolbar toolbar = findViewById(R.id.login_toolbar);
-        setSupportActionBar(toolbar);
+        setSupportActionBar(binding.loginToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
-        }
         url = getResources().getString(R.string.webservice).concat("usuario/email/");
+
+        // Clear the error once more than 8 characters are typed.
+        final TextInputLayout senhaTextInput = binding.loginContent.loginSenhaInput;
+        senhaTextInput.getEditText().setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                TextInputValidator.validate(senhaTextInput);
+                return false;
+            }
+        });
     }
 
     public void doLogin(View view) {
-        if (validateFields()) {
+        View layoutView = findViewById(R.id.login_content);
+        if (TextInputValidator.validateAllInputs(layoutView)) {
 
             String email = binding.loginContent.loginEmailInput.getEditText().getText().toString().trim();
 
@@ -72,24 +80,6 @@ public class LoginActivity extends AppCompatActivity {
                     });
             RequestQueueSingleton.getInstance(this).addToRequestQueue(jsonObjectRequest);
         }
-    }
-
-    /**
-     * Check if all inputs are valid.
-     * @return a boolean
-     */
-    public boolean validateFields() {
-        TextInputLayout emailLayout = binding.loginContent.loginEmailInput;
-        TextInputLayout senhaLayout = binding.loginContent.loginSenhaInput;
-        boolean isAllValids = true;
-
-        if (!TextInputValidator.validate(emailLayout, true, false)) {
-            isAllValids = false;
-        }
-        if (!TextInputValidator.validate(senhaLayout, false, true)) {
-            isAllValids = false;
-        }
-        return isAllValids;
     }
 
     /**

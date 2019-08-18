@@ -13,5 +13,10 @@
             android:title="@string/menu_signup"
             android:onClick="goToSignupActivity"
             app:showAsAction="never"/>
+
+        <item
+            android:title="@string/menu_add_ad"
+            android:onClick="goToNewAdActivity"
+            app:showAsAction="never"/>
     </group>
 </menu>

@@ -133,6 +133,14 @@ public class MainActivity extends AppCompatActivity {
         NavigationModule.goToSignupActivity(this);
     }
 
+    public void goToNewAdActivity(MenuItem item) {
+        NavigationModule.goToNewAdActivity(this);
+    }
+
+    public void goToYourAdsActivity(MenuItem item) {
+        NavigationModule.goToSignupActivity(this);
+    }
+
     public void logout(MenuItem item) {
         session.logoutUser();
         finish();

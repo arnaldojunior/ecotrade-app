@@ -6,6 +6,7 @@ import android.content.Intent;
 import com.arnaldojunior.ecotrade.AdActivity;
 import com.arnaldojunior.ecotrade.LoginActivity;
 import com.arnaldojunior.ecotrade.MainActivity;
+import com.arnaldojunior.ecotrade.NewAdActivity;
 import com.arnaldojunior.ecotrade.SignupActivity;
 import com.arnaldojunior.ecotrade.model.Anuncio;
 
@@ -18,6 +19,11 @@ public class NavigationModule {
 
     public static void goToSignupActivity(Context context) {
         Intent intent = new Intent(context, SignupActivity.class);
+        context.startActivity(intent);
+    }
+
+    public static void goToNewAdActivity(Context context) {
+        Intent intent = new Intent(context, NewAdActivity.class);
         context.startActivity(intent);
     }
 

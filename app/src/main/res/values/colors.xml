@@ -26,6 +26,9 @@
 
     <!-- buttons -->
     <color name="button_default">@color/salamander</color>
+    <color name="button_default_text">@color/white</color>
+    <color name="button_option">@color/carrot</color>
+    <color name="button_option_selected">@color/carrot</color>
 
     <!-- inputs -->
     <color name="input_stroke_default">@color/forest_green</color>

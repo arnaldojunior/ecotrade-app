@@ -4,10 +4,12 @@
 
     <item android:id="@+id/add_anuncio"
         android:title="@string/menu_add_ad"
+        android:onClick="goToNewAdActivity"
         app:showAsAction="never"/>
 
     <item android:id="@+id/your_ads"
         android:title="@string/menu_your_ads"
+        android:onClick="goToYourAdsActivity"
         app:showAsAction="never"/>
 
     <item android:id="@+id/your_count"

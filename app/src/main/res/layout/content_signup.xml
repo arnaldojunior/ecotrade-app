@@ -115,6 +115,8 @@
             app:boxStrokeColor="@color/input_stroke_default"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/signupEmailInput"
+            app:passwordToggleEnabled="true"
+            app:passwordToggleTint="@color/sea_green"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -129,6 +131,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/cadastro_button"
+            android:textColor="@color/button_default_text"
             android:layout_marginTop="15dp"
             android:onClick="sendForm"
             app:layout_constraintStart_toStartOf="parent"

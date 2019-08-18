@@ -7,8 +7,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:theme="@style/AppTheme.Material"
         android:padding="10dp"
+        android:theme="@style/AppTheme.Material"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:context=".LoginActivity"
         tools:showIn="@layout/activity_login">
@@ -55,6 +55,8 @@
             app:boxStrokeColor="@color/input_stroke_default"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/loginEmailInput"
+            app:passwordToggleEnabled="true"
+            app:passwordToggleTint="@color/sea_green"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -69,12 +71,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/login_entrar"
+            android:textColor="@color/button_default_text"
             android:layout_marginTop="10dp"
             android:onClick="doLogin"
+            android:backgroundTint="@color/button_default"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/loginSenhaInput"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:backgroundTint="@color/button_default"/>
+            app:layout_constraintEnd_toEndOf="parent" />
 
         <LinearLayout
             android:layout_width="match_parent"

@@ -12,15 +12,18 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
         android:usesCleartextTraffic="true">
-
+        <activity
+            android:name=".NewAdActivity"
+            android:label="@string/title_activity_new_ad"
+            android:parentActivityName=".MainActivity"/>
         <activity
             android:name=".SignupActivity"
             android:label="@string/title_activity_signup"
-            android:parentActivityName=".MainActivity"/>
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login"
-            android:parentActivityName=".MainActivity"/>
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".AdActivity"
             android:label="@string/title_activity_detail"
