@@ -102,34 +102,31 @@
                 android:layout_height="wrap_content"
                 android:text="@string/new_ad_finalidade_vender"
                 android:textColor="@color/button_option"
-                android:layout_marginLeft="15dp"
+                android:layout_marginLeft="10dp"
                 app:cornerRadius="@dimen/fab_margin"
                 app:strokeColor="@color/button_option"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/newAdValor"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/new_ad_valor"
+                android:textColorHint="@color/input_hint_default"
+                android:visibility="gone"
+                android:layout_marginLeft="15dp"
+                app:boxBackgroundColor="@color/tea"
+                app:boxStrokeColor="@color/input_stroke_default"
+                app:errorEnabled="true"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="number"
+                    android:textColor="@color/input_text_default"/>
+            </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/newAdValor"
-            android:layout_width="250dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:hint="@string/new_ad_valor"
-            android:textColorHint="@color/input_hint_default"
-            android:visibility="gone"
-            app:boxBackgroundColor="@color/tea"
-            app:boxStrokeColor="@color/input_stroke_default"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/newAdFinalidadeOptions"
-            app:errorEnabled="true"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="top"
-                android:inputType="textMultiLine"
-                android:textColor="@color/input_text_default" />
-        </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/categoriaTextInput"
@@ -141,7 +138,7 @@
             app:boxBackgroundColor="@color/tea"
             app:boxStrokeColor="@color/input_stroke_default"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/newAdValor"
+            app:layout_constraintTop_toBottomOf="@id/newAdFinalidadeOptions"
             app:errorEnabled="true"
             app:endIconMode="custom"
             app:endIconDrawable="@android:drawable/ic_menu_more"
@@ -153,7 +150,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="top"
-                android:textColor="@color/input_text_default" />
+                android:textColor="@color/input_text_default"
+                android:focusableInTouchMode="false"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout

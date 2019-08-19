@@ -24,7 +24,7 @@
         </com.google.android.material.appbar.AppBarLayout>
 
         <include layout="@layout/content_new_ad"
-            android:id="@+id/content"/>
+            android:id="@+id/newAdContent"/>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
