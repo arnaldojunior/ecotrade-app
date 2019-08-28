@@ -14,20 +14,17 @@ public class TextInputValidator {
         EditText editText = inputLayout.getEditText();
         if (isEmpty(editText)) {
             inputLayout.setError("Campo obrigatório!");
-            inputLayout.setErrorEnabled(true);
             return false;
         } else {
             if (isEmail(editText) && !validateEmail(editText)) {
                 inputLayout.setError("E-mail inválido!");
-                inputLayout.setErrorEnabled(true);
                 return false;
             } else {
                 if (isPassword(editText) && !validatePassword(editText)) {
                     inputLayout.setError("A senha deve possuir ao menos 6 dígitos!");
-                    inputLayout.setErrorEnabled(true);
                     return false;
                 } else {
-                    inputLayout.setErrorEnabled(false);
+                    inputLayout.setError("");
                 }
             }
         }
@@ -70,5 +67,13 @@ public class TextInputValidator {
 
     public static boolean isPassword(EditText editText) {
         return editText.getInputType() == 129 ? true : false;
+    }
+
+    public static boolean isCEPValid(String cep) {
+        return cep.length() == 8 ? true : false;
+    }
+
+    public static void setErrorMessage(TextInputLayout textInputLayout, String message) {
+        textInputLayout.setError(message);
     }
 }

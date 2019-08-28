@@ -4,120 +4,134 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:theme="@style/AppTheme.Material"
-        android:padding="10dp"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:fillViewport="true"
         tools:context=".NewAdActivity"
-        tools:showIn="@layout/activity_login">
+        tools:showIn="@layout/activity_new_ad"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <TextView
-            android:id="@+id/newAdTitleTV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/cadastro_title"
-            android:textSize="20sp"
-            android:textColor="@color/spice"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/newAdTituloInput"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/new_ad_contraint_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:hint="@string/new_ad_titulo"
-            android:textColorHint="@color/input_hint_default"
-            app:boxBackgroundColor="@color/tea"
-            app:boxStrokeColor="@color/input_stroke_default"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/newAdTitleTV"
-            app:errorEnabled="true"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+            android:layout_height="match_parent"
+            android:theme="@style/AppTheme.Material"
+            android:padding="10dp">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/input_text_default"
-                android:inputType="text"/>
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/newAdDescricaoInput"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:hint="@string/new_ad_descricao"
-            android:textColorHint="@color/input_hint_default"
-            app:boxBackgroundColor="@color/tea"
-            app:boxStrokeColor="@color/input_stroke_default"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/newAdTituloInput"
-            app:errorEnabled="true"
-            app:endIconMode="clear_text"
-            app:endIconTint="@color/sea_green"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="top"
-                android:inputType="textMultiLine"
-                android:textColor="@color/input_text_default" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <TextView
-            android:id="@+id/newAdFinalidade"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/new_ad_finalidade"
-            android:textSize="20sp"
-            android:textColor="@color/fern"
-            android:layout_marginTop="10dp"
-            app:layout_constraintTop_toBottomOf="@id/newAdDescricaoInput"
-            app:layout_constraintLeft_toLeftOf="parent"/>
-
-        <LinearLayout
-            android:id="@+id/newAdFinalidadeOptions"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintTop_toBottomOf="@id/newAdFinalidade">
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/finalidadeDoar"
+            <TextView
+                android:id="@+id/newAdTitleTV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/new_ad_finalidade_doar"
-                android:textColor="@color/button_option"
-                app:cornerRadius="@dimen/fab_margin"
-                app:strokeColor="@color/button_option"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
+                android:text="@string/cadastro_title"
+                android:textSize="20sp"
+                android:textColor="@color/spice"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/finalidadeVender"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/newAdTituloInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:hint="@string/new_ad_titulo"
+                android:textColorHint="@color/input_hint_default"
+                app:boxBackgroundColor="@color/tea"
+                app:boxStrokeColor="@color/input_stroke_default"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/newAdTitleTV"
+                app:errorEnabled="true"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/input_text_default"
+                    android:inputType="text"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/newAdDescricaoInput"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:hint="@string/new_ad_descricao"
+                android:textColorHint="@color/input_hint_default"
+                app:boxBackgroundColor="@color/tea"
+                app:boxStrokeColor="@color/input_stroke_default"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/newAdTituloInput"
+                app:errorEnabled="true"
+                app:endIconMode="clear_text"
+                app:endIconTint="@color/sea_green"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="top"
+                    android:inputType="textMultiLine"
+                    android:textColor="@color/input_text_default" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/newAdFinalidade"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/new_ad_finalidade_vender"
-                android:textColor="@color/button_option"
-                android:layout_marginLeft="10dp"
-                app:cornerRadius="@dimen/fab_margin"
-                app:strokeColor="@color/button_option"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
+                android:text="@string/new_ad_finalidade"
+                android:textSize="20sp"
+                android:textColor="@color/fern"
+                android:layout_marginTop="10dp"
+                app:layout_constraintTop_toBottomOf="@id/newAdDescricaoInput"
+                app:layout_constraintLeft_toLeftOf="parent"/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/newAdFinalidadeOptions"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:layout_constraintWidth_percent="0.5"
+                app:layout_constraintTop_toBottomOf="@id/newAdFinalidade"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/finalidadeDoar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/new_ad_finalidade_doar"
+                    android:textColor="@color/button_option"
+                    app:cornerRadius="@dimen/fab_margin"
+                    app:strokeColor="@color/button_option"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/finalidadeVender"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/new_ad_finalidade_vender"
+                    android:textColor="@color/button_option"
+                    app:cornerRadius="@dimen/fab_margin"
+                    app:strokeColor="@color/button_option"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/newAdValor"
-                android:layout_width="150dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:hint="@string/new_ad_valor"
                 android:textColorHint="@color/input_hint_default"
-                android:visibility="gone"
-                android:layout_marginLeft="15dp"
+                android:visibility="invisible"
                 app:boxBackgroundColor="@color/tea"
                 app:boxStrokeColor="@color/input_stroke_default"
                 app:errorEnabled="true"
+                app:layout_constraintWidth_percent="0.45"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/newAdFinalidade"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -126,78 +140,97 @@
                     android:inputType="number"
                     android:textColor="@color/input_text_default"/>
             </com.google.android.material.textfield.TextInputLayout>
-        </LinearLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/categoriaTextInput"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:hint="@string/new_ad_categoria"
-            android:textColorHint="@color/input_hint_default"
-            app:boxBackgroundColor="@color/tea"
-            app:boxStrokeColor="@color/input_stroke_default"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/newAdFinalidadeOptions"
-            app:errorEnabled="true"
-            app:endIconMode="custom"
-            app:endIconDrawable="@android:drawable/ic_menu_more"
-            app:endIconContentDescription="@string/more_options"
-            app:endIconTint="@color/forest_green"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-            <com.google.android.material.textfield.TextInputEditText
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/newAdCategoria"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="top"
-                android:textColor="@color/input_text_default"
-                android:focusableInTouchMode="false"/>
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_height="wrap_content"
+                android:hint="@string/new_ad_categoria"
+                android:textColorHint="@color/input_hint_default"
+                app:boxBackgroundColor="@color/tea"
+                app:boxStrokeColor="@color/input_stroke_default"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/newAdValor"
+                app:errorEnabled="true"
+                app:endIconMode="custom"
+                app:endIconDrawable="@android:drawable/ic_menu_more"
+                app:endIconContentDescription="@string/more_options"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/cepTextInput"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:hint="@string/new_ad_cep"
-            android:textColorHint="@color/input_hint_default"
-            app:boxBackgroundColor="@color/tea"
-            app:boxStrokeColor="@color/input_stroke_default"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/categoriaTextInput"
-            app:errorEnabled="true"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="top"
+                    android:textColor="@color/input_text_default"
+                    android:focusableInTouchMode="false"/>
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputEditText
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/cepTextInput"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/new_ad_cep"
+                android:textColorHint="@color/input_hint_default"
+                app:boxBackgroundColor="@color/tea"
+                app:boxStrokeColor="@color/input_stroke_default"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/newAdCategoria"
+                app:errorEnabled="true"
+                app:layout_constraintWidth_percent="0.37"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="number"
+                    android:textColor="@color/input_text_default" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/logradouroTextInput"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/new_ad_logradouro"
+                android:textColorHint="@color/input_hint_default"
+                android:focusableInTouchMode="false"
+                app:boxBackgroundColor="@color/tea"
+                app:boxStrokeColor="@color/input_stroke_default"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/newAdCategoria"
+                app:layout_constraintWidth_percent="0.6"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textColor="@color/input_text_default" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/localizacaoTextView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="top"
-                android:textColor="@color/input_text_default" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_height="45sp"
+                android:text="Localização"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:background="@color/honey"
+                android:gravity="center"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@id/cepTextInput"/>
 
-        <TextView
-            android:id="@+id/localizacaoTextView"
-            android:layout_width="match_parent"
-            android:layout_height="50sp"
-            android:text="Localização"
-            android:textColor="@color/white"
-            android:textSize="25sp"
-            android:background="@color/carrot"
-            android:gravity="center"
-            android:visibility="gone"
-            app:layout_constraintTop_toBottomOf="@id/cepTextInput"/>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/enviarButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/cadastro_button"
+                android:textColor="@color/button_default_text"
+                android:layout_marginTop="10dp"
+                android:backgroundTint="@color/button_default"
+                android:onClick="sendForm"
+                app:layout_constraintTop_toBottomOf="@id/localizacaoTextView"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/enviarButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/cadastro_button"
-            android:textColor="@color/button_default_text"
-            android:layout_marginTop="10dp"
-            android:backgroundTint="@color/button_default"
-            app:layout_constraintTop_toBottomOf="@id/localizacaoTextView"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
 </layout>

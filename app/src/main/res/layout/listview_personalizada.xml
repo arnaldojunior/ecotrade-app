@@ -27,8 +27,7 @@
             android:id="@+id/listview_personalizada_finalidade"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="25dp"
-            android:textFontWeight="bold"/>
+            android:textSize="25dp" />
 
         <LinearLayout
             android:layout_width="match_parent"

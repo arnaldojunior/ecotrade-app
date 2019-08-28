@@ -35,6 +35,7 @@
             app:boxStrokeColor="@color/input_stroke_default"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/signupTitleTV"
+            app:errorEnabled="true"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -48,13 +49,13 @@
             android:id="@+id/signupCpfInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:hint="@string/cadastro_cpf"
             android:textColorHint="@color/input_hint_default"
             app:boxBackgroundColor="@color/tea"
             app:boxStrokeColor="@color/input_stroke_default"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/signupNomeInput"
+            app:errorEnabled="true"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -68,13 +69,13 @@
             android:id="@+id/signupTelefoneInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:hint="@string/cadastro_telefone"
             android:textColorHint="@color/input_hint_default"
             app:boxBackgroundColor="@color/tea"
             app:boxStrokeColor="@color/input_stroke_default"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/signupCpfInput"
+            app:errorEnabled="true"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -88,13 +89,13 @@
             android:id="@+id/signupEmailInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:hint="@string/cadastro_email"
             android:textColorHint="@color/input_hint_default"
             app:boxBackgroundColor="@color/tea"
             app:boxStrokeColor="@color/input_stroke_default"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/signupTelefoneInput"
+            app:errorEnabled="true"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -108,7 +109,6 @@
             android:id="@+id/signupSenhaInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:hint="@string/cadastro_senha"
             android:textColorHint="@color/input_hint_default"
             app:boxBackgroundColor="@color/tea"
@@ -117,6 +117,7 @@
             app:layout_constraintTop_toBottomOf="@id/signupEmailInput"
             app:passwordToggleEnabled="true"
             app:passwordToggleTint="@color/sea_green"
+            app:errorEnabled="true"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -132,7 +133,7 @@
             android:layout_height="wrap_content"
             android:text="@string/cadastro_button"
             android:textColor="@color/button_default_text"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="5dp"
             android:onClick="sendForm"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/signupSenhaInput"

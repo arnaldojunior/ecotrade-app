@@ -4,6 +4,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 public class Cidade implements Serializable {
 
@@ -15,7 +16,7 @@ public class Cidade implements Serializable {
     private String nome;
     @SerializedName("uf")
     @Expose
-    private Uf uf;
+    private Uf uf = new Uf();
 
     public String getId() {
         return id;
@@ -44,5 +45,29 @@ public class Cidade implements Serializable {
     public String getLocalizacao() {
         return nome.concat("/").concat(uf.getUf());
 
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Cidade cidade = (Cidade) o;
+        return Objects.equals(id, cidade.id) &&
+                Objects.equals(nome, cidade.nome) &&
+                Objects.equals(uf, cidade.uf);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, nome, uf);
+    }
+
+    @Override
+    public String toString() {
+        return "Cidade{" +
+                "id='" + id + '\'' +
+                ", nome='" + nome + '\'' +
+                ", uf=" + uf +
+                '}';
     }
 }

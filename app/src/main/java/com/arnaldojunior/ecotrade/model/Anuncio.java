@@ -10,21 +10,24 @@ public class Anuncio implements Serializable {
     @SerializedName("id")
     @Expose
     private Long id;
+    @SerializedName("usuario")
+    @Expose
+    private Usuario usuario;
     @SerializedName("categoria")
     @Expose
-    private Categoria categoria;
+    private Categoria categoria = new Categoria();
     @SerializedName("cidade")
     @Expose
-    private Cidade cidade;
+    private Cidade cidade = new Cidade();
     @SerializedName("finalidade")
     @Expose
     private String finalidade;
     @SerializedName("produto")
     @Expose
-    private Produto produto;
+    private Produto produto = new Produto();
     @SerializedName("endereco")
     @Expose
-    private Endereco endereco;
+    private Endereco endereco = new Endereco();
     @SerializedName("quando")
     @Expose
     private Object quando;
@@ -38,6 +41,14 @@ public class Anuncio implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
     public Categoria getCategoria() {

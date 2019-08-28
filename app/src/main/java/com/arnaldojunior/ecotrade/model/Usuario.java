@@ -3,8 +3,6 @@ package com.arnaldojunior.ecotrade.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import org.json.JSONObject;
-
 import java.io.Serializable;
 import java.util.Objects;
 
