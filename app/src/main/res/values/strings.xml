@@ -59,7 +59,8 @@
     <string name="new_ad_endereco">Endereço</string>
     <string name="new_ad_logradouro">Logradouro</string>
     <string name="new_ad_bairro">Bairro</string>
-    <string name="new_ad_cep">CEP</string>
+    <string name="new_ad_localizacao">Localização</string>
+    <string name="new_ad_cep">CEP*</string>
     <string name="new_ad_numero">Número</string>
     <string name="new_ad_imagens">Imagens</string>
 

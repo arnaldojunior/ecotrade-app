@@ -59,16 +59,33 @@ public class NewAdActivity extends AppCompatActivity implements CategoryFragment
         binding = DataBindingUtil.setContentView(this, R.layout.activity_new_ad);
         layout = binding.newAdContent;
 
-        cepTextInput = binding.newAdContent.cepTextInput;
-        localizacaoTextView = binding.newAdContent.localizacaoTextView;
-        logradouroEditText = binding.newAdContent.logradouroTextInput.getEditText();
-        doarButton = binding.newAdContent.finalidadeDoar;
-        venderButton = binding.newAdContent.finalidadeVender;
-        valorTextInput = binding.newAdContent.newAdValor;
+        cepTextInput = layout.cepTextInput;
+        localizacaoTextView = layout.localizacaoTextView;
+        logradouroEditText = layout.logradouroTextInput.getEditText();
+        doarButton = layout.finalidadeDoar;
+        venderButton = layout.finalidadeVender;
+        valorTextInput = layout.newAdValor;
 
         setSupportActionBar(binding.newAdToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        setInputListeners();
+
+        session = new SessionManager(getApplicationContext());
+        HashMap<String, String> credentials = session.getUserDetails();
+        requestUserByEmail(credentials.get("email"));
+    }
+
+    public void setInputListeners() {
+        layout.newAdTituloInput.getEditText().setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    TextInputValidator.validate(layout.newAdTituloInput);
+                }
+            }
+        });
 
         doarButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,7 +107,7 @@ public class NewAdActivity extends AppCompatActivity implements CategoryFragment
             }
         });
 
-        binding.newAdContent.newAdCategoria.getEditText().setOnClickListener(new View.OnClickListener() {
+        layout.newAdCategoria.getEditText().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openCategorySelectionFragment();
@@ -103,26 +120,25 @@ public class NewAdActivity extends AppCompatActivity implements CategoryFragment
         cepEditText.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
-                String cep = Mask.unmask(cepEditText.getText().toString());
-                System.out.println("CEP: "+ cep);
-                if (TextInputValidator.isCEPValid(cep)) {
-                    requestAddress(cep);
-                } else {
-                    cepTextInput.setError("");
-                    if (logradouroEditText.getText().length() > 0) {
-                        logradouroEditText.setText("");
-                    }
-                    if (localizacaoTextView.getVisibility() == View.VISIBLE) {
-                        localizacaoTextView.setVisibility(View.GONE);
+                if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                    String cep = Mask.unmask(cepEditText.getText().toString());
+                    System.out.println("CEP: "+ cep);
+                    if (TextInputValidator.isCEPValid(cep)) {
+                        requestAddress(cep);
+                        return true;
+                    } else {
+                        cepTextInput.setError("");
+                        if (logradouroEditText.getText().length() > 0) {
+                            logradouroEditText.setText("");
+                        }
+                        if (localizacaoTextView.getVisibility() == View.VISIBLE) {
+                            localizacaoTextView.setVisibility(View.GONE);
+                        }
                     }
                 }
                 return false;
             }
         });
-
-        session = new SessionManager(getApplicationContext());
-        HashMap<String, String> credentials = session.getUserDetails();
-        requestUserByEmail(credentials.get("email"));
     }
 
     public void requestAddress(String cep) {
@@ -154,14 +170,9 @@ public class NewAdActivity extends AppCompatActivity implements CategoryFragment
         RequestQueueSingleton.getInstance(this).addToRequestQueue(jsonObjectRequest);
     }
 
-    @Override
-    public void onListFragmentInteraction(String item) {
-        binding.newAdContent.newAdCategoria.getEditText().setText(item.toString());
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.remove(fragment);
-        transaction.commit();
-    }
-
+    /**
+     * Open a list fragment to user select one category.
+     */
     public void openCategorySelectionFragment() {
         fragment = new CategoryFragment();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -169,6 +180,19 @@ public class NewAdActivity extends AppCompatActivity implements CategoryFragment
         transaction.commit();
     }
 
+    @Override
+    public void onListFragmentInteraction(String item) {
+        layout.newAdCategoria.getEditText().setText(item.toString());
+        TextInputValidator.validate(layout.newAdCategoria);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.remove(fragment);
+        transaction.commit();
+    }
+
+    /**
+     * Build a json object and send it to webservice.
+     * @param view
+     */
     public void sendForm(View view) {
         if (isFormValid()) {
             anuncio.getProduto().setNome(layout.newAdTituloInput.getEditText().getText().toString().trim());
@@ -190,12 +214,10 @@ public class NewAdActivity extends AppCompatActivity implements CategoryFragment
                 anuncio.getCidade().getUf().setUf(address.getUf());
                 anuncio.getCidade().setNome(address.getLocalidade());
             }
-            System.out.println("ANÚNCIO: "+ anuncio.toString());
 
             JSONObject jsonObject = null;
             try {
                 jsonObject = new JSONObject(gson.toJson(anuncio));
-                System.out.println("GSON: "+ gson.toJson(anuncio));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -206,7 +228,6 @@ public class NewAdActivity extends AppCompatActivity implements CategoryFragment
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
-                            System.out.println("SUCESSO: "+ response);
                             showConfirmationDialog();
                         }
                     }, new Response.ErrorListener() {
@@ -219,22 +240,41 @@ public class NewAdActivity extends AppCompatActivity implements CategoryFragment
         }
     }
 
+    /**
+     * Check the validation of required fields.
+     * @return whether form is valid or not.
+     */
     public boolean isFormValid() {
-        if (TextInputValidator.validate(binding.newAdContent.newAdTituloInput)
-                && TextInputValidator.validate(binding.newAdContent.newAdCategoria)
-                && (isButtonSelected(doarButton)
-                    || isButtonSelected(venderButton))) {
-            if (isButtonSelected(doarButton)) {
-                return true;
-            }
-            String value = valorTextInput.getEditText().toString();
-            if (isButtonSelected(venderButton) && value.length() != 0) {
-                return true;
-            } else {
-                valorTextInput.setError("Campo obrigatório!");
+        boolean noErrors = true;
+        if (!TextInputValidator.validate(layout.newAdTituloInput))
+            noErrors = false;
+
+        if (!TextInputValidator.validate(layout.newAdCategoria))
+            noErrors = false;
+
+        if (!isButtonSelected(doarButton) && !isButtonSelected(venderButton)) {
+            noErrors = false;
+            Toast.makeText(getApplicationContext(), "Escolha uma finalidade!", Toast.LENGTH_SHORT).show();
+        } else {
+            if (isButtonSelected(venderButton)) {
+                if (TextInputValidator.isEmpty(valorTextInput.getEditText())) {
+                    noErrors = false;
+                    valorTextInput.setError("Campo obrigatório!");
+                } else {
+                    valorTextInput.setError("");
+                }
             }
         }
-        return false;
+        if (TextInputValidator.validate(cepTextInput)) {
+            String cep = Mask.unmask(cepTextInput.getEditText().getText().toString());
+            if (!TextInputValidator.isCEPValid(cep)) {
+                cepTextInput.setError("CEP inválido!");
+                noErrors = false;
+            } else {
+                cepTextInput.setError("");
+            }
+        }
+        return noErrors;
     }
 
     /**
