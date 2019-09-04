@@ -2,14 +2,28 @@ package com.arnaldojunior.ecotrade;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.Manifest;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.util.Base64;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,6 +38,7 @@ import com.arnaldojunior.ecotrade.model.Anuncio;
 import com.arnaldojunior.ecotrade.model.Usuario;
 import com.arnaldojunior.ecotrade.util.Mask;
 import com.arnaldojunior.ecotrade.util.NavigationModule;
+import com.arnaldojunior.ecotrade.util.PermissionManager;
 import com.arnaldojunior.ecotrade.util.RequestQueueSingleton;
 import com.arnaldojunior.ecotrade.util.SessionManager;
 import com.arnaldojunior.ecotrade.util.TextInputValidator;
@@ -35,6 +50,12 @@ import com.google.gson.Gson;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.HashMap;
 
 public class NewAdActivity extends AppCompatActivity implements CategoryFragment.OnListFragmentInteractionListener {
@@ -52,6 +73,10 @@ public class NewAdActivity extends AppCompatActivity implements CategoryFragment
     private Anuncio anuncio = new Anuncio();
     private ContentNewAdBinding layout;
     private Address address;
+    private ImageView currentImage;
+    private String Document_img1="";
+    private boolean permissionsGranted = false;
+    private static final int PERMISSIONS_READ_EXTERNAL_STORAGE = 3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +90,7 @@ public class NewAdActivity extends AppCompatActivity implements CategoryFragment
         doarButton = layout.finalidadeDoar;
         venderButton = layout.finalidadeVender;
         valorTextInput = layout.newAdValor;
+        currentImage = layout.newAdAddImage;
 
         setSupportActionBar(binding.newAdToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -137,6 +163,22 @@ public class NewAdActivity extends AppCompatActivity implements CategoryFragment
                     }
                 }
                 return false;
+            }
+        });
+
+        layout.newAdAddImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String permission = Manifest.permission.READ_EXTERNAL_STORAGE;
+                if (PermissionManager.hasPermission(getApplicationContext(), permission)) {
+                    selectImage();
+                } else {
+                    Toast.makeText(getApplicationContext(), "Permissões requiridas!",
+                            Toast.LENGTH_SHORT).show();
+                    PermissionManager.requestPermissions(NewAdActivity.this,
+                            new String[] {Manifest.permission.READ_EXTERNAL_STORAGE},
+                            PERMISSIONS_READ_EXTERNAL_STORAGE);
+                }
             }
         });
     }
@@ -336,5 +378,138 @@ public class NewAdActivity extends AppCompatActivity implements CategoryFragment
             }
         });
         RequestQueueSingleton.getInstance(this).addToRequestQueue(jsonObjectRequest);
+    }
+
+    private void selectImage() {
+        final CharSequence[] options = { "Câmera", "Galeria","Cancelar" };
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Adicionar Foto");
+        builder.setItems(options, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int item) {
+                if (options[item].equals("Câmera"))
+                {
+                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    File f = new File(android.os.Environment.getExternalStorageDirectory(), "temp.jpg");
+                    intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
+                    startActivityForResult(intent, 1);
+                }
+                else if (options[item].equals("Galeria"))
+                {
+                    Intent intent = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    startActivityForResult(intent, 2);
+                }
+                else if (options[item].equals("Cancelar")) {
+                    dialog.dismiss();
+                }
+            }
+        });
+        builder.show();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case PERMISSIONS_READ_EXTERNAL_STORAGE: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // permission was granted, yay! Do the
+                    selectImage();
+                } else {
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                }
+                return;
+            }
+
+            // other 'case' lines to check for other
+            // permissions this app might request.
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            if (requestCode == 1) {
+                File f = new File(Environment.getExternalStorageDirectory().toString());
+                for (File temp : f.listFiles()) {
+                    if (temp.getName().equals("temp.jpg")) {
+                        f = temp;
+                        break;
+                    }
+                }
+                try {
+                    Bitmap bitmap;
+                    BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
+                    bitmap = BitmapFactory.decodeFile(f.getAbsolutePath(), bitmapOptions);
+                    bitmap = getResizedBitmap(bitmap, 400);
+                    currentImage.setImageBitmap(bitmap);
+                    BitMapToString(bitmap);
+                    String path = android.os.Environment
+                            .getExternalStorageDirectory()
+                            + File.separator
+                            + "Phoenix" + File.separator + "default";
+                    f.delete();
+                    OutputStream outFile = null;
+                    File file = new File(path, String.valueOf(System.currentTimeMillis()) + ".jpg");
+                    try {
+                        outFile = new FileOutputStream(file);
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 85, outFile);
+                        outFile.flush();
+                        outFile.close();
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } else if (requestCode == 2) {
+                Uri selectedImage = data.getData();
+                String[] filePath = { MediaStore.Images.Media.DATA };
+                Cursor c = getContentResolver().query(selectedImage,filePath, null, null, null);
+                c.moveToFirst();
+                int columnIndex = c.getColumnIndex(filePath[0]);
+                String picturePath = c.getString(columnIndex);
+                System.out.println("********PICTUREPATH: "+ picturePath);
+                c.close();
+                Bitmap thumbnail = (BitmapFactory.decodeFile(picturePath));
+                System.out.println("********THUMBNAIL: "+ thumbnail);
+                thumbnail = getResizedBitmap(thumbnail, 400);
+                Log.w("Path of image:", picturePath+"");
+                System.out.println("********PATH: "+ picturePath);
+                currentImage.setImageBitmap(thumbnail);
+                BitMapToString(thumbnail);
+            }
+        }
+    }
+
+    public String BitMapToString(Bitmap userImage1) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        userImage1.compress(Bitmap.CompressFormat.PNG, 60, baos);
+        byte[] b = baos.toByteArray();
+        Document_img1 = Base64.encodeToString(b, Base64.DEFAULT);
+        return Document_img1;
+    }
+
+    public Bitmap getResizedBitmap(Bitmap image, int maxSize) {
+        System.out.println("********IMAGE: "+ image);
+        int width = image.getWidth();
+        int height = image.getHeight();
+
+        float bitmapRatio = (float)width / (float) height;
+        if (bitmapRatio > 1) {
+            width = maxSize;
+            height = (int) (width / bitmapRatio);
+        } else {
+            height = maxSize;
+            width = (int) (height * bitmapRatio);
+        }
+        return Bitmap.createScaledBitmap(image, width, height, true);
     }
 }
