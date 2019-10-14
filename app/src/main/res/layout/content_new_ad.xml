@@ -241,22 +241,19 @@
                 app:layout_constraintTop_toBottomOf="@id/localizacaoTextView"
                 app:layout_constraintLeft_toLeftOf="parent"/>
 
-            <androidx.core.widget.NestedScrollView
+            <GridLayout
                 android:id="@+id/newAdImageContainer"
                 android:layout_width="match_parent"
-                android:layout_height="110dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:background="@color/lightGray"
+                android:padding="1px"
+                android:columnCount="4"
+                android:rowCount="4"
                 app:layout_constraintTop_toBottomOf="@id/newAdImagem"
                 app:layout_constraintStart_toStartOf="parent">
 
-                <ImageView
-                    android:id="@+id/newAdAddImage"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:src="@drawable/plus"/>
-
-            </androidx.core.widget.NestedScrollView>
+            </GridLayout>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/enviarButton"

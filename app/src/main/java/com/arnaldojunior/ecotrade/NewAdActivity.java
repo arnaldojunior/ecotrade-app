@@ -2,8 +2,6 @@ package com.arnaldojunior.ecotrade;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -22,6 +20,7 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -73,7 +72,7 @@ public class NewAdActivity extends AppCompatActivity implements CategoryFragment
     private Anuncio anuncio = new Anuncio();
     private ContentNewAdBinding layout;
     private Address address;
-    private ImageView currentImage;
+    private ImageView newImage;
     private String Document_img1="";
     private boolean permissionsGranted = false;
     private static final int PERMISSIONS_READ_EXTERNAL_STORAGE = 3;
@@ -90,17 +89,49 @@ public class NewAdActivity extends AppCompatActivity implements CategoryFragment
         doarButton = layout.finalidadeDoar;
         venderButton = layout.finalidadeVender;
         valorTextInput = layout.newAdValor;
-        currentImage = layout.newAdAddImage;
 
         setSupportActionBar(binding.newAdToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
+        addNewImageView(); // add new image select button
         setInputListeners();
 
         session = new SessionManager(getApplicationContext());
         HashMap<String, String> credentials = session.getUserDetails();
         requestUserByEmail(credentials.get("email"));
+    }
+
+    /**
+     * Add a new image select button for user to select.
+     */
+    public void addNewImageView() {
+        ImageView imageView = new ImageView(getApplicationContext());
+        imageView.setLayoutParams(new ViewGroup.LayoutParams(240, 240));
+        imageView.setImageResource(R.drawable.plus);
+        layout.newAdImageContainer.addView(imageView);
+
+        int lastChildIndex = layout.newAdImageContainer.getChildCount();
+        newImage = (ImageView) layout.newAdImageContainer.getChildAt(lastChildIndex - 1);
+        addImageOnClickListener(newImage);
+    }
+
+    public void addImageOnClickListener(ImageView imageView) {
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String permission = Manifest.permission.READ_EXTERNAL_STORAGE;
+                if (PermissionManager.hasPermission(getApplicationContext(), permission)) {
+                    selectImage();
+                } else {
+                    Toast.makeText(getApplicationContext(), "Permissões requiridas!",
+                            Toast.LENGTH_SHORT).show();
+                    PermissionManager.requestPermissions(NewAdActivity.this,
+                            new String[] {Manifest.permission.READ_EXTERNAL_STORAGE},
+                            PERMISSIONS_READ_EXTERNAL_STORAGE);
+                }
+            }
+        });
     }
 
     public void setInputListeners() {
@@ -163,22 +194,6 @@ public class NewAdActivity extends AppCompatActivity implements CategoryFragment
                     }
                 }
                 return false;
-            }
-        });
-
-        layout.newAdAddImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String permission = Manifest.permission.READ_EXTERNAL_STORAGE;
-                if (PermissionManager.hasPermission(getApplicationContext(), permission)) {
-                    selectImage();
-                } else {
-                    Toast.makeText(getApplicationContext(), "Permissões requiridas!",
-                            Toast.LENGTH_SHORT).show();
-                    PermissionManager.requestPermissions(NewAdActivity.this,
-                            new String[] {Manifest.permission.READ_EXTERNAL_STORAGE},
-                            PERMISSIONS_READ_EXTERNAL_STORAGE);
-                }
             }
         });
     }
@@ -380,6 +395,9 @@ public class NewAdActivity extends AppCompatActivity implements CategoryFragment
         RequestQueueSingleton.getInstance(this).addToRequestQueue(jsonObjectRequest);
     }
 
+    /**
+     * Calls a options select image dialog.
+     */
     private void selectImage() {
         final CharSequence[] options = { "Câmera", "Galeria","Cancelar" };
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -445,7 +463,7 @@ public class NewAdActivity extends AppCompatActivity implements CategoryFragment
                     BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
                     bitmap = BitmapFactory.decodeFile(f.getAbsolutePath(), bitmapOptions);
                     bitmap = getResizedBitmap(bitmap, 400);
-                    currentImage.setImageBitmap(bitmap);
+                    newImage.setImageBitmap(bitmap);
                     BitMapToString(bitmap);
                     String path = android.os.Environment
                             .getExternalStorageDirectory()
@@ -476,16 +494,14 @@ public class NewAdActivity extends AppCompatActivity implements CategoryFragment
                 c.moveToFirst();
                 int columnIndex = c.getColumnIndex(filePath[0]);
                 String picturePath = c.getString(columnIndex);
-                System.out.println("********PICTUREPATH: "+ picturePath);
                 c.close();
                 Bitmap thumbnail = (BitmapFactory.decodeFile(picturePath));
-                System.out.println("********THUMBNAIL: "+ thumbnail);
                 thumbnail = getResizedBitmap(thumbnail, 400);
                 Log.w("Path of image:", picturePath+"");
-                System.out.println("********PATH: "+ picturePath);
-                currentImage.setImageBitmap(thumbnail);
+                newImage.setImageBitmap(thumbnail);
                 BitMapToString(thumbnail);
             }
+            addNewImageView(); // add new image select button
         }
     }
 
@@ -498,7 +514,6 @@ public class NewAdActivity extends AppCompatActivity implements CategoryFragment
     }
 
     public Bitmap getResizedBitmap(Bitmap image, int maxSize) {
-        System.out.println("********IMAGE: "+ image);
         int width = image.getWidth();
         int height = image.getHeight();
 
