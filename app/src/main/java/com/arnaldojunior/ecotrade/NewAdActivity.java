@@ -34,6 +34,7 @@ import com.arnaldojunior.ecotrade.databinding.ActivityNewAdBinding;
 import com.arnaldojunior.ecotrade.databinding.ContentNewAdBinding;
 import com.arnaldojunior.ecotrade.model.Address;
 import com.arnaldojunior.ecotrade.model.Anuncio;
+import com.arnaldojunior.ecotrade.model.Image;
 import com.arnaldojunior.ecotrade.model.Usuario;
 import com.arnaldojunior.ecotrade.util.Mask;
 import com.arnaldojunior.ecotrade.util.NavigationModule;
@@ -279,6 +280,8 @@ public class NewAdActivity extends AppCompatActivity implements CategoryFragment
                 e.printStackTrace();
             }
 
+            System.out.println("JSON: "+ jsonObject);
+
             String url = getResources().getString(R.string.webservice).concat("anuncio");
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                     Request.Method.POST, url, jsonObject,
@@ -499,7 +502,10 @@ public class NewAdActivity extends AppCompatActivity implements CategoryFragment
                 thumbnail = getResizedBitmap(thumbnail, 400);
                 Log.w("Path of image:", picturePath+"");
                 newImage.setImageBitmap(thumbnail);
-                BitMapToString(thumbnail);
+
+                // Convert image to String and add it to anuncio object.
+                Image image = new Image(BitMapToString(thumbnail));
+                anuncio.getImages().add(image);
             }
             addNewImageView(); // add new image select button
         }

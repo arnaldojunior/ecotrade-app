@@ -4,6 +4,8 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Anuncio implements Serializable {
@@ -34,6 +36,9 @@ public class Anuncio implements Serializable {
     @SerializedName("valor")
     @Expose
     private String valor;
+    @SerializedName("images")
+    @Expose
+    private List<Image> images = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -107,6 +112,14 @@ public class Anuncio implements Serializable {
         this.valor = valor;
     }
 
+    public List<Image> getImages() {
+        return images;
+    }
+
+    public void setImages(List<Image> images) {
+        this.images = images;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -129,13 +142,16 @@ public class Anuncio implements Serializable {
     @Override
     public String toString() {
         return "Anuncio{" +
-                "id='" + id + '\'' +
+                "id=" + id +
+                ", usuario=" + usuario +
                 ", categoria=" + categoria +
                 ", cidade=" + cidade +
                 ", finalidade='" + finalidade + '\'' +
                 ", produto=" + produto +
+                ", endereco=" + endereco +
                 ", quando=" + quando +
                 ", valor='" + valor + '\'' +
+                ", images=" + images +
                 '}';
     }
 }
